@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: userservice
+  labels:
+    helm.sh/chart: userservice-0.1.0
+    app.kubernetes.io/name: userservice
+    app.kubernetes.io/instance: userservice
+    app.kubernetes.io/version: "82009fc"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  serviceAccountName: userservice
+  securityContext: {}
+  containers:
+    - name: userservice
+      securityContext: {}
+      command:
+        - sleep
+        - infinity
+      image: "ivplay4689/steller-userservice:82009fc"
+      imagePullPolicy: IfNotPresent
+      envFrom:
+        - secretRef:
+            name: userservice-db
+      ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          path: /
+          port: http
+      readinessProbe:
+        httpGet:
+          path: /
+          port: http
+      resources: {}
