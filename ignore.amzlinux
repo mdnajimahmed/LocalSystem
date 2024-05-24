@@ -1,0 +1,106 @@
+# provider "aws" {
+#   region = "ap-southeast-1"  # Specify your desired AWS region
+# }
+
+# # IAM role and policy for S3 access
+# resource "aws_iam_role" "s3_read_role" {
+#   name = "s3-read-role"
+
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Effect = "Allow",
+#         Principal = {
+#           Service = "ec2.amazonaws.com"
+#         },
+#         Action = "sts:AssumeRole"
+#       }
+#     ]
+#   })
+# }
+
+# resource "aws_iam_policy" "s3_read_policy" {
+#   name        = "s3-read-policy"
+#   description = "Policy to allow EC2 instances to read from S3 bucket"
+
+#   policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Effect = "Allow",
+#         Action = [
+#           "s3:GetObject",
+#           "s3:ListBucket"
+#         ],
+#         Resource = [
+#           "arn:aws:s3:::319740671597-ap-southeast-1-k8sec2",
+#           "arn:aws:s3:::319740671597-ap-southeast-1-k8sec2/*"
+#         ]
+#       }
+#     ]
+#   })
+# }
+
+# resource "aws_iam_role_policy_attachment" "s3_read_policy_attachment" {
+#   role       = aws_iam_role.s3_read_role.name
+#   policy_arn = aws_iam_policy.s3_read_policy.arn
+# }
+
+# resource "aws_instance" "kind_instance" {
+#   ami           = "ami-0be48b687295f8bd6"  # Ubuntu
+#   instance_type = "t3.medium"  # Specify your instance type
+
+#   key_name      = "mdnajimahmed2023"  # Pre-existing key pair name
+
+#   iam_instance_profile = aws_iam_instance_profile.s3_read_instance_profile.name
+
+#   user_data = <<-EOF
+#               #!/bin/bash
+#               # Update and install required packages
+#               sudo yum update -y
+#               sudo yum install -y docker
+
+#               # Start Docker service
+#               sudo service docker start
+#               sudo usermod -aG docker ec2-user
+
+#               curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+#               chmod +x ./kind
+#               sudo mv ./kind /usr/local/bin/kind
+
+#               # Install AWS CLI
+#               sudo yum install -y aws-cli
+
+#               # Download kind configs
+#               aws s3 cp s3://319740671597-ap-southeast-1-k8sec2/kindconfig/ ./kindconfig/ --recursive
+
+#               # Create Kind cluster
+#               kind create cluster --config ./kindconfig/00-kind-cluster-config.yaml
+
+#               # Install kubectl
+#               sudo curl -LO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#               sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+#               # Install Nginx ingress controller
+#               kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+#               mkdir -p ~/.kube
+
+#               sudo kind export kubeconfig
+#               EOF
+
+#   tags = {
+#     Name = "kind-instance"
+#   }
+# }
+
+# resource "aws_iam_instance_profile" "s3_read_instance_profile" {
+#   name = "s3-read-instance-profile"
+#   role = aws_iam_role.s3_read_role.name
+# }
+
+# output "instance_public_ip" {
+#   description = "The public IP address of the EC2 instance"
+#   value       = aws_instance.kind_instance.public_ip
+# }
