@@ -299,3 +299,52 @@ Company Name Registration: binaryverseconsulting.com
 Owner: Najma Akther
 Business Structure: Sole Proprietorship
 Type of service: Software Development and Consultancy
+
+
+
+7015340923
+
+
+
+
+
+
+
+
+House rent(done)
+Van Fee(done)
+School fee(If applicable) - (done)
+Mobile Recharge(if applicable) - done()
+Fixed Deposit(done-saved)
+iPhone installment(done)
+car installment(Automated)
+Electricity bill(done)
+
+Water bill(if applicable)
+Credit card
+
+
+
+
+
+
+-----BEGIN CERTIFICATE-----
+MIIDDTCCAfWgAwIBAgIRANADWxcopAcoeL7urjez0vQwDQYJKoZIhvcNAQELBQAw
+FTETMBEGA1UEAxMKa3ViZXJuZXRlczAeFw0yNDA2MjkwNTM2NDFaFw0yNTA2Mjkw
+NTM2NDFaMCcxFDASBgNVBAoTC3BvZC1yZWFkZXJzMQ8wDQYDVQQDEwZzaHVjaGkw
+ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCMj4zIK6sSmhihhirg3Jgt
+qFIqYuWgQFLrPUTjcoA/l+6bWn63a3Hsnp26gvTx0DLPHpgxrqzLuUzdfMAXoM0u
+4mT3Om/gvegY8JliHS3BTKRd+MFiZjKbvG1skB0jKiZHeMaRl/4lUIWTbrMduxWC
+cwID8Tm1Do5tPwqly5rOVdfpI20pJPOd0gpgAgH+8gkTdjWOJWGOwbBhSqvWexbV
+cObemIZBB5chzhrrwdz1eLzlzWxPkpxiNsvT0w2XtNFKg949+e9Vw2GmOd4MzxJD
+Fv0UzckY+siiKHzqnmwMaI048XO1lG9HNOtovQfTttcj0T/NPIxguaN52RYgnLC3
+AgMBAAGjRjBEMBMGA1UdJQQMMAoGCCsGAQUFBwMCMAwGA1UdEwEB/wQCMAAwHwYD
+VR0jBBgwFoAU4qC13igijgelkJGv4SwAMAFBCd4wDQYJKoZIhvcNAQELBQADggEB
+AIDJl4SfYOZtZ3bwDnRM1HpnXZzBO2MN/DljtIAjVbl5sI2U+7j/XWzYVtUhiT99
+OGI6lb4gO1+tUvd0FT6Mh79wkdf2TYAkA6JTsyewmBj097aRPYGvpyfWSeeL94UB
+OUxNVRhhXd/5anh1DYLONhGwtfxmdNZmdHJumSKJ72Ex3+PwyE8l8XfZSuRakqmA
+Fr1LioBtqbwUve8u4uB8AV/zkg1FSJFV/707B3wOo/WYLisU1kU8XaZUwTZuWhdR
+IqPcSIiNt/6e6X3zEf9NK0wMpWZKt84CB7SPVqks4Lv/y15A/Mf8Ci8374cYwxo7
+hI4hoIu+7R/+hmzdkJoWxA4=
+-----END CERTIFICATE-----
+

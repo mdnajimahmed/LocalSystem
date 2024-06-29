@@ -1,0 +1,39 @@
+# Create Role
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: get-pods-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+
+---
+# Bind Role with Group
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: get-pods-rolebinding
+  namespace: default
+subjects:
+- kind: Group
+  name: pod-readers
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: get-pods-role
+  apiGroup: rbac.authorization.k8s.io
+--- 
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: shuchi
+spec:
+  signerName: kubernetes.io/kube-apiserver-client
+  groups: 
+    - pod-readers
+  usages:
+    - client auth
+  request:
+    LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ2JEQ0NBVlFDQVFBd0p6RVBNQTBHQTFVRUF3d0djMmgxWTJocE1SUXdFZ1lEVlFRS0RBdHdiMlF0Y21WaApaR1Z5Y3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBSXlQak1ncnF4S2FHS0dHCkt1RGNtQzJvVWlwaTVhQkFVdXM5Uk9OeWdEK1g3cHRhZnJkcmNleWVuYnFDOVBIUU1zOGVtREd1ck11NVROMTgKd0JlZ3pTN2laUGM2YitDOTZCandtV0lkTGNGTXBGMzR3V0ptTXB1OGJXeVFIU01xSmtkNHhwR1gvaVZRaFpOdQpzeDI3RllKekFnUHhPYlVPam0wL0NxWExtczVWMStramJTa2s4NTNTQ21BQ0FmN3lDUk4yTlk0bFlZN0JzR0ZLCnE5WjdGdFZ3NXQ2WWhrRUhseUhPR3V2QjNQVjR2T1hOYkUrU25HSTJ5OVBURFplMDBVcUQzajM1NzFYRFlhWTUKM2d6UEVrTVcvUlROeVJqNnlLSW9mT3FlYkF4b2pUanhjN1dVYjBjMDYyaTlCOU8yMXlQUlA4MDhqR0M1bzNuWgpGaUNjc0xjQ0F3RUFBYUFBTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBd0dOeHJnN29CR2lMRE1NWWNqdzdQClBkZ1B0UklmOE0wZWIxRG9jRWIxNlV2OHJQTnRuTXJFaXM0bVJjVGhIeEZIU2JYNDZMYkhzL1ZhUGVUejloN1UKVlErTUlSVVozbkk0M0tRZGl2emI3NG0vcS9RMXFSeDdQc2xUenZsLzVFUlV5L0huSDlpWFU4Qzl0Sjg1VWtCWApzNHJBdFVtaUlPOUh0QThDaFd6U2lMbzFFTTYwTzlnS0hTRGh5dWpha0JGNWFmMWc4K0ZIejNld09uTzVCSnBhCjY4aEdFN2VBUHN5STZkOEtweDh6VDJEYkN5alVLS1JZeWx6U3ZjKytaTHE5RndxMHUwMm8vdWxsajR0YVFpcysKWFIyQVY3enVpWjJEellibElma2doWkpxenl1cXNBNGI4cnVsT04yR2ltOG5JVzFWKzhJZWZoNGhOTk5rRUJ6SgotLS0tLUVORCBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K

@@ -25,3 +25,16 @@ kubectl apply -f 02-ingress-test.yml
 # Handle ec2:
 aws ec2 stop-instances --instance-ids i-0cd44fb7e1fdd3650
 aws ec2 start-instances --instance-ids i-0cd44fb7e1fdd3650
+
+
+
+# Create Kubernetes user
+- docker run -v /Users/najim/Documents/work/github/LocalSystem/user-k8s/certs:/home/certs -it --entrypoint=/bin/bash ivplay4689/kubectl:29June2024
+- cd /home/certs
+- openssl genrsa -out shuchi.key 2048
+- openssl req -new -key shuchi.key -subj "/CN=shuchi/O=pod-readers" -out shuchi.csr
+- kubectl get csr
+- kubectl certificate approve shuchi
+- kubectl get csr shuchi -o yaml `copy status.certificate`
+- echo "ctrl + v" | base64 --decode `just to verify, base64 encoded one will be passed to the user to update kubeconfig client-certificate-data field under user`
+- cat certs/shuchi.key| base64 `update client-key-data field in the user`
