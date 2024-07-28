@@ -38,3 +38,16 @@ aws ec2 start-instances --instance-ids i-0cd44fb7e1fdd3650
 - kubectl get csr shuchi -o yaml `copy status.certificate`
 - echo "ctrl + v" | base64 --decode `just to verify, base64 encoded one will be passed to the user to update kubeconfig client-certificate-data field under user`
 - cat certs/shuchi.key| base64 `update client-key-data field in the user`
+
+
+# Handle docker login
+- cat ~/.docker/config.json                       
+{
+        "auths": {
+                "123456789.dkr.ecr.ap-southeast-1.amazonaws.com": {},
+                "https://index.docker.io/v1/": {}
+        },
+        "credsStore": "desktop",
+        "currentContext": "desktop-linux"
+}%                                                                               
+- docker logout 123456789.dkr.ecr.ap-southeast-1.amazonaws.com

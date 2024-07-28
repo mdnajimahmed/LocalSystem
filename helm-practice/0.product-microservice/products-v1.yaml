@@ -1,0 +1,30 @@
+products:
+  - id: 1
+    name: "Laptop"
+    category: "Electronics"
+    price: 999.99
+    stock: 20
+    description: "A high-performance laptop suitable for all your computing needs."
+    features:
+      - "Intel Core i7 Processor"
+      - "16GB RAM"
+      - "512GB SSD"
+      - "15.6 inch Full HD Display"
+    images:
+      - "https://example.com/images/laptop1.jpg"
+      - "https://example.com/images/laptop2.jpg"
+
+  - id: 2
+    name: "Smartphone"
+    category: "Electronics"
+    price: 599.99
+    stock: 50
+    description: "A cutting-edge smartphone with all the latest features."
+    features:
+      - "6.5 inch OLED Display"
+      - "128GB Storage"
+      - "Triple Camera System"
+      - "5G Connectivity"
+    images:
+      - "https://example.com/images/smartphone1.jpg"
+      - "https://example.com/images/smartphone2.jpg"
