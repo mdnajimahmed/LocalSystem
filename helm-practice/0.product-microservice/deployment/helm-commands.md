@@ -1,0 +1,25 @@
+- helm create product-microservice
+    - Charts.yml : metadata of the chart
+        - apiVersion(defines the schema of Chart.yml),name,version are mandatory
+        - type can be application or library: Application charts are a collection of templates that can be packaged into versioned archives to be deployed.Library charts provide useful utilities or functions for the chart developer. They're included as a dependency of application charts to inject those utilities and functions into the rendering pipeline. Library charts do not define any templates and therefore cannot be deployed.
+        - icon: https://my-icon.jpg
+        - keywords: list of keywords(tags)
+        - home: url
+        - sources: list of github urls
+        - maintainers: list of (name,email)
+    - charts folder: Dependent charts will be here, if my chart depends on other charts they will be here.
+    - templates folder: templates
+    - values.yml: values  
+    - _helpers.tpl : Fucntions/methods using gotemplate language to use them inside template folder
+- packaging: helm package <CHART_FOLDER>
+    - optional flags:
+        - u : pull the latest version of the dependencies, puts them inside the charts folder and then the packaging will be done.
+        - d: save the tar file to go to a different directory.
+        - some flags for signing and securing the package
+
+- linting: ( helpful during chart development)
+    - helm lint <PATH_TO_CHART>
+    - `helm lint product-microservice` or `go inside product-microservice and run helm lint .`
+    - Info, Warning, Error(non zero exit code)
+    - works on zip version as well!
+    - can take multiple charts!
