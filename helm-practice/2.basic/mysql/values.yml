@@ -1,0 +1,45 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/mysql/values.yaml
+initdbScripts:
+  my_init_script.sh: |
+    #!/bin/bash
+    if [[ $(hostname) == *primary* ]]; then
+      echo "Primary node"
+      password_aux="${MYSQL_ROOT_PASSWORD:-}"
+      if [[ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]]; then
+          password_aux=$(cat "$MYSQL_ROOT_PASSWORD_FILE")
+      fi
+      echo "password_aux = $password_aux"
+      mysql -P 3306 -uroot -p"$password_aux" -e "
+      USE helm_db;
+      CREATE TABLE employees (
+        emp_no      INT             NOT NULL AUTO_INCREMENT,
+        birth_date  DATE            NOT NULL,
+        first_name  VARCHAR(14)     NOT NULL,
+        last_name   VARCHAR(16)     NOT NULL,
+        gender      ENUM ('M','F')  NOT NULL,
+        hire_date   DATE            NOT NULL,
+        PRIMARY KEY (emp_no),
+        INDEX (first_name),
+        INDEX (last_name)
+      );
+      "
+    else
+      echo "Secondary node"
+    fi
+
+auth:
+  ## @param auth.rootPassword Password for the `root` user. Ignored if existing secret is provided
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#setting-the-root-password-on-first-run
+  ##
+  rootPassword: "019asdbTAD"
+  ## @param auth.createDatabase Whether to create the .Values.auth.database or not
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#creating-a-database-on-first-run
+  ##
+  createDatabase: true
+  ## @param auth.database Name for a custom database to create
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#creating-a-database-on-first-run
+  ##
+  database: "helm_db"
+  ## @param auth.username Name for a custom user to create
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#creating-a-database-user-on-first-run
+  ##

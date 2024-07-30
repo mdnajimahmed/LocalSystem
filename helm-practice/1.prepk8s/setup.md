@@ -12,3 +12,6 @@
 - kubectl create ns kube-prometheus-stack
 - helm install kube-prometheus-stack --namespace kube-prometheus-stack prometheus-community/kube-prometheus-stack
 <!-- - helm install kube-prometheus-stack --namespace kube-prometheus-stack prometheus-community/kube-prometheus-stack -f /Users/mdnajimahmed/Documents/LocalSystem/helm-practice/1.prepk8s/values.yml -->
+
+# Multiple cluster with helm:
+Just switch context with kubectl and then apply helm command. Alternatively we can use KUBECONFIG env variable.
