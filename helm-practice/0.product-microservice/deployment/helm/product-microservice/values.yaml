@@ -2,6 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+custom:
+  favorite:
+    countries:
+      - Uganda
+      - Mexico
+      - Ireland
+      - Norway
+    food: beef
+
 replicaCount: 1
 
 image:

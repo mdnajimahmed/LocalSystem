@@ -66,4 +66,4 @@ playing with history version and rollback
 
 - `- removes whitespace, if before then removes leading space, else remove trailing space `
 
-- helm get manifest - `diff check between cluster version of yaml and helm version of yaml`
+- helm get manifest - `diff check between cluster version of yaml and helm version of yaml`, VVI to check what is running in the k8s cluster.

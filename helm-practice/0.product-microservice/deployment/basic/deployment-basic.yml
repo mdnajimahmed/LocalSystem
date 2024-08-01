@@ -26,6 +26,7 @@ spec:
       containers:
       - name: product-microservice-nodejs
         image: ivplay4689/product-microservice-nodejs:v1
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"
@@ -38,13 +39,46 @@ spec:
         env:
           - name: PRODUCT_YAML_PATH
             value: "/etc/config/products.yaml"
+          - name: MYSQL_ROOT_PASSWORD
+            value: "mysql123"
+          - name: MYSQL_DATABASE
+            value: ecommerce
+          - name: MYSQL_USER
+            value: root
+          - name: MYSQL_HOST
+            value: localhost
         volumeMounts:
             - name: config-volume
               mountPath: /etc/config
+      - name: mysql-sidecar
+        image: mysql:8.0.19
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "mysql123"
+        volumeMounts:
+        - name: mysql-initdb
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
       volumes:
         - name: config-volume
           configMap:
             name: product-microservice-nodejs-config
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
 --- 
 
 apiVersion: autoscaling/v1
@@ -53,7 +87,7 @@ metadata:
   name: product-microservice-nodejs-hpa
   namespace: default
 spec:
-  maxReplicas: 2
+  maxReplicas: 1
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
@@ -97,4 +131,65 @@ data:
         images:
           - "https://example.com/images/smartphone1.jpg"
           - "https://example.com/images/smartphone2.jpg"
+
+--- 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init-db.sql: |
+    -- Drop user if exists (if the user already exists, this ensures no conflicts)
+    DROP USER IF EXISTS 'root'@'127.0.0.1';
+    DROP USER IF EXISTS 'root'@'localhost';
+    DROP USER IF EXISTS 'root'@'::1';
+
+    -- Create users with mysql_native_password for each host
+    CREATE USER 'root'@'127.0.0.1' IDENTIFIED WITH mysql_native_password BY 'mysql123';
+    CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql123';
+    CREATE USER 'root'@'::1' IDENTIFIED WITH mysql_native_password BY 'mysql123';
+
+    -- Grant privileges to the users
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'::1' WITH GRANT OPTION;
+
+    -- Apply changes
+    FLUSH PRIVILEGES;
+    CREATE DATABASE IF NOT EXISTS ecommerce;
+    USE ecommerce;
+    CREATE TABLE IF NOT EXISTS products (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        price DECIMAL
+    );
+    INSERT INTO products (name, price) VALUES
+    ('Ron95', 2.05),
+    ('Ron97', 3.95);
+  
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+  
+--- 
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
 
