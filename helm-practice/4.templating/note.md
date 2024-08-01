@@ -55,4 +55,77 @@ helm install --dry-run:
 Purpose: Simulates an install, rendering templates and running all hooks, but does not actually install anything.
 Usage: Run it to see what would happen if you installed the chart.
 Output: Shows the rendered templates and simulates the installation process, providing information on any potential issues.
-- 
+- Summary of practice
+```
+{{.Values.image.repository}}
+{{.Chart.Description}}
+{{.Chart.Name}} {{.Chart.Version}} {{.Chart.AppVersion}}
+{{.Chart.Annotations}}
+{{.Release.Name}}
+{{.Release.Namespace}}
+{{.Release.IsInstall}}
+{{.Release.IsUpgrade}}
+{{.Release.Service}}
+{{.Template.Name}}
+{{.Template.BasePath}}
+{{.Capabilities.APIVersions}}
+{{.Capabilities.APIVersions.Has "batch/v1"}}
+{{.Capabilities.KubeVersion}}
+{{.Capabilities.HelmVersion}}
+{{.Chart.Icon | default "missing" | upper | quote}}
+{{- "TEST WHo???"}}
+{{- if .Values.serviceAccount.create }}
+{{- "service account should be created" | nindent 16}}
+{{- else}}
+{{- "no service account for you!" | nindent 16}}
+{{- end }}
+{{"TESTING WITH"}}
+{{with .Values.custom.favorite.countries}}
+countries:
+{{- toYaml . | nindent 2}}
+{{- end}}
+{{with .Values.custom.favorite.drink}}
+drink: {{ . }}
+{{- else}}
+drink: "Cocacola"
+{{- end}}
+{{- $ovrd:=.Values.custom.favorite.food}}
+{{$ovrd | indent 16}}
+
+{{"RANGE NORMAL"}}
+{{- range .Values.custom.favorite.countries }}
+{{-  . | upper}}
+{{end}}
+
+{{"RANGE Index and Value"}}
+{{range $index, $value := .Values.custom.favorite.countries }}
+{{- printf "Index: %d, Value: %s" $index $value | indent 16 }}
+{{end}}
+
+
+{{"RANGE dictionary"}}
+{{range $index, $value := .Values.image }}
+{{- printf "DICT> Key: %s, Value: %s" $index $value | indent 16 }}
+{{end}}
+
+{{"Funny looping"}}
+{{ repeat 16 "shit!" }}
+
+{{"The beginner for loop increment"}}
+{{- range untilStep 2 11 2 }}
+    - containerPort: {{ . }}
+      protocol: TCP
+  {{- end }}
+
+{{"The beginner for loop deccrement"}}
+{{- range untilStep 10 1 -2 }}
+    - containerPort: {{ . }}
+      protocol: TCP
+  {{- end }}
+
+{{"Iterating tuple"}}
+sizes:
+    {{- range tuple "small" "medium" "large" }}
+    - {{ . }}
+    {{- end }}    
+```

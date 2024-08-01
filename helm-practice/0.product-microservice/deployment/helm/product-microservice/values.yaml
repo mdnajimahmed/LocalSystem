@@ -2,22 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-custom:
-  favorite:
-    countries:
-      - Uganda
-      - Mexico
-      - Ireland
-      - Norway
-    food: beef
-
 replicaCount: 1
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: ivplay4689/product-microservice-nodejs
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -50,7 +41,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3000
 
 ingress:
   enabled: false
@@ -114,3 +105,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+mysql:
+  enabled: false
