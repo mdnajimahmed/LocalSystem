@@ -1,0 +1,61 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: practice
+  name: service-access-role
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create","delete"]
+# - apiGroups: [""]
+#   resources: ["persistentvolumes"]
+#   verbs: ["get", "list", "delete"]
+# - apiGroups: [""]
+#   resources: ["persistentvolumeclaims"]
+#   verbs: ["get", "list", "delete"]
+--- 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: practice
+  name: service-access-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: practice
+roleRef:
+  kind: Role
+  name: service-access-role
+  apiGroup: rbac.authorization.k8s.io
+--- 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: get-mysql-service
+  labels:
+    app: my-app
+  annotations:
+    "helm.sh/hook": post-install
+spec:
+  serviceAccountName: default  # Make sure the correct service account is used
+  containers:
+    - name: get-mysql-service
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          MYSQL_SERVICE_NAME=$(kubectl get svc --namespace {{ .Release.Namespace }} -l app.kubernetes.io/component=primary,app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{- (index .Chart.Dependencies 0).Name }} -o jsonpath='{.items[0].metadata.name}')
+          if [ -z "$MYSQL_SERVICE_NAME" ]; then
+            echo "No MySQL service found"
+            exit 1
+          fi
+          echo "MYSQL_SERVICE_NAME = $MYSQL_SERVICE_NAME";
+          kubectl delete configmap mysql-service-config -n {{ .Release.Namespace }} --ignore-not-found
+          kubectl create configmap mysql-service-config -n {{ .Release.Namespace }} --from-literal=mysql-service-name=${MYSQL_SERVICE_NAME}
+          
+  restartPolicy: Never

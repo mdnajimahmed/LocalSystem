@@ -50,6 +50,25 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name -}} - {{- (index .Chart.Dependencies 0).Name }} # name of the installation and dependancy name
+                key: mysql-root-password
+          - name: PRODUCT_YAML_PATH
+            value: "/etc/config/products.yaml"
+          - name: MYSQL_DATABASE
+            value: ecommerce
+          - name: MYSQL_USER
+            value: root
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-service-config
+                key: mysql-service-name
+                
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

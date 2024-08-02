@@ -27,5 +27,19 @@ dependencies:
   - name: mysql
     version: "11.1.14"
     repository: https://charts.bitnami.com/bitnami
-    condition: mysql.enabled
+    # => condition based adding dependancy
+    # condition: mysqlDep.enabled
+
+    # => tag based adding dependancy
+    # tags:
+    #   - enabled
+
+    # => explicit import
+    # import-values:
+    #   - service
+
+    # => explicit import
+    # import-values:
+    #   - child: image
+    #     parent: mySqlChartImage
 

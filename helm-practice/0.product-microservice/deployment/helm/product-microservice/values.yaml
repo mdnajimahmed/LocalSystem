@@ -106,5 +106,21 @@ tolerations: []
 
 affinity: {}
 
+# => enable / disable dependancy
+
+mysqlDep:
+  enabled: false # use condition
+tags:
+  enabled: true # use tag
+# => Change values of dependant chart / override value of dependant charts Value.yml
+
+# name of the dependecy to be put there(mysql)
 mysql:
-  enabled: false
+  image:
+    pullPolicy: Always
+  primary:
+    persistence:
+      size: 100Mi
+  secondary:
+    persistence:
+      size: 100Mi

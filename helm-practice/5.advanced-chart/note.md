@@ -40,4 +40,45 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: mysql.enabled <--------------------------------- CHANGE ( use it as it is , not via .Values ****** VVVI)
 ```
+- careful : if the tag deos not exist it resolves to true by default not false!
 - We had to uninstall and install when dependecies change.
+- We can also use tags. Tags and conditions allow you to turn on and off dependencies as they are installed. 
+- helm uninstall product -n practice
+- helm dependency update .
+- helm dependency build .
+- helm install --namespace practice product .
+- kubectl get pods -n practice
+- kubectl get pvc -n practice
+
+- pass value to dependancy from the main chart / override dependant chart value from main chart
+    - create a yaml key with the name of the dependancy
+    - then put the config under that.
+- read value from dependant chart
+    - `explicit import`: If the dependant chart library (mysql in our case), in it's values.yml file there is a export section like this - 
+    ```
+    export:
+        service:
+            port: 8080
+    ```
+    then in our Charts.yml we can export the keys under import-values section of the corresponding dependancy.
+    ```
+    dependencies:
+  - name: mysql
+    version: "11.1.14"
+    repository: https://charts.bitnami.com/bitnami
+    # condition: mysql.enabled
+    tags:
+      - enabled
+    import-values: < -------------------------------------- explicit import
+      - service
+    ```
+    And then use it in our chart like .Values.service.port ( but what if we have the same key in our chart!!! - I don't know!)
+
+    - `implicit import`
+        - test: {{.Values.mySqlChartImage.pullPolicy}} 
+        - import-values:
+            - child: image < -------------------------------- the value that is coming from Values.yml of the dependant char (VVI ***** , only can inport(refer to) from values.yml)
+              parent: mySqlChartImage < --- more like an alias!
+
+- Hook: 
+    - 
