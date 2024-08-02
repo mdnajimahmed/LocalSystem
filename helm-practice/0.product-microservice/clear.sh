@@ -20,3 +20,5 @@ done
 echo "All PVCs and PVs patched successfully."
 
 kubectl delete cm mysql-service-config -n practice
+kubectl delete role service-access-role -n practice
+kubectl delete rolebinding service-access-rolebinding -n practice

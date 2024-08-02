@@ -44,6 +44,7 @@ dependencies:
 - We had to uninstall and install when dependecies change.
 - We can also use tags. Tags and conditions allow you to turn on and off dependencies as they are installed. 
 - helm uninstall product -n practice
+- open a new shell and run cd /Users/mdnajimahmed/Documents/LocalSystem/helm-practice/0.product-microservice && ./clear.sh
 - helm dependency update .
 - helm dependency build .
 - helm install --namespace practice product .
