@@ -80,5 +80,17 @@ dependencies:
             - child: image < -------------------------------- the value that is coming from Values.yml of the dependant char (VVI ***** , only can inport(refer to) from values.yml)
               parent: mySqlChartImage < --- more like an alias!
 
-- Hook: 
-    - 
+- Hook: (can be any k8s object e.g job / pod)
+    - take backup, do some action in between helm following lifecycles:
+      - 
+    - helm.sh/hook annotation is used.
+    - helm.sh/hook-weight defines order in which they are executed.
+    - (pre,post) x (install,delete,upgrate,rollback)  = 8 hooks + 1 test hook, so total 9
+    - can give comma separated multiple values e.g helm.sh/hook = pre-install,post-rollback
+    - deletion policy, helm.sh/hook-delete-policy = before-hook-creation (default)
+      - before-hook-creation
+      - hook-succeeded
+      - hook-failed
+    - Tesing:
+        - Just yet another lifecycle hook
+        - must need a release because the command is `helm test <RELEASE_NAME>`
