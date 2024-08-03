@@ -1,0 +1,17 @@
+- mkdir starter-wd # wd = working directory
+- cd starter-wd
+- helm create starter-chart
+- search and replace all "starter-chart" with <CHARTNAME> except Chart.yml
+- helm package starter-chart
+- helm push starter-chart-0.1.0.tgz oci://localhost:5151/helm-starters
+- brew install oras
+- oras repo ls localhost:5151/helm-starters
+- oras repo tags localhost:5151/helm-starters/starter-chart
+- oras repo ls localhost:5151
+- helm env HELM_DATA_HOME
+- ./prepStarter.sh starter-chart 0.1.0
+- cd /Users/mdnajimahmed/Documents/LocalSystem/helm-practice/7.starters
+- helm create --starter starter-chart-0.1.0 demoapp
+- change values image tag to ngiinx valid tag, e.g 1.27.0
+- helm install demoappfromstarter demoapp
+
