@@ -1,0 +1,20 @@
+
+# This manifest file dictates how the ngix app should be deployed.
+apiVersion: argoproj.io/v1alpha1
+kind: Application 
+metadata:
+  name: nginx-argocd-application
+  namespace: argocd # Must be the same namespace where argocd is installed otherwise won't work
+spec:
+  project: default # collection of applications
+  source:
+    repoURL: 'https://github.com/mdnajimahmed/LocalSystem.git' # Which repo to watch
+    path: argocd/argo-cd/manifests # With folder to watch 
+    targetRevision: main # Which branch
+  destination:
+    server: 'https://34.126.151.196' # gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" 
+    namespace: default # The actuall namespace where the application will be installed
+  syncPolicy:
+    automated:
+      selfHeal: true # Always sync the cluster with git repo
+      prune: true # Delete any resource that is not created via github manifest.

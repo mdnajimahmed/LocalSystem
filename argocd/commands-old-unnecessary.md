@@ -60,5 +60,5 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 - ** Kind, Ingres and ArgoCD is dancing as expected! lol. so taking the port forwarding path to continue the lecture. 
 - argocd login localhost:8080 --insecure
-- argocd account update-password --current-password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --new-password @rgoa@min^01
+- argocd account update-password --current-password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --new-password @rgo@dmin^01
  
