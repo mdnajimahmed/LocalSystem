@@ -9,7 +9,7 @@ spec:
   project: default # collection of applications
   source:
     repoURL: 'https://github.com/mdnajimahmed/LocalSystem.git' # Which repo to watch
-    path: argocd/argo-cd/manifests # With folder to watch 
+    path: argocd/argo-cd/nginx # With folder to watch 
     targetRevision: main # Which branch
   destination:
     server: 'https://34.126.151.196' # gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" 
