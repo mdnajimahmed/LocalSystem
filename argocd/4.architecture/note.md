@@ -20,3 +20,10 @@ In argocd everything starts with an application. An application is a set of inst
 - We just have to apply argocd yaml once to the cluster to watch the applications directory.
 
 - create a new applications directory and move nginx-argocd-application there.
+
+# Helm deploy:
+- has capability to deploy helm char with changed values.yml file. details study needs to be done to explore the options available and how to customise them. 
+
+# Secret management using gitops:
+
+
