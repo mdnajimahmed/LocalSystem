@@ -15,7 +15,7 @@ spec:
 
   destination:
     server: 'https://34.126.151.196' # gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" 
-    namespace: kube-system # VVI because the cli assumes it here.
+    namespace: kubeseal # VVI because the cli assumes default kube-system , but had to change due to GKE autopilot
   syncPolicy:
     automated:
       selfHeal: true # Always sync the cluster with git repo
