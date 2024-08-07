@@ -25,5 +25,7 @@ In argocd everything starts with an application. An application is a set of inst
 - has capability to deploy helm char with changed values.yml file. details study needs to be done to explore the options available and how to customise them. 
 
 # Secret management using gitops:
-
+- Two main components:
+    - kubecseal: brew install kubeseal
+    - controller: 
 
