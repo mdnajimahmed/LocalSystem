@@ -3,7 +3,7 @@
 kind: Application 
 apiVersion: argoproj.io/v1alpha1
 metadata:
-  name: httpbin-argocd-application
+  name: sealed-secrets-argocd-application
   namespace: argocd # Must be the same namespace where argocd is installed otherwise won't work
 spec:
   project: default # collection of applications
