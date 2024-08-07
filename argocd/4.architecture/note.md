@@ -28,4 +28,9 @@ In argocd everything starts with an application. An application is a set of inst
 - Two main components:
     - kubecseal: brew install kubeseal
     - controller: 
-
+        - kubectl create ns kubeseal `GKE Autopilot does not let anyone touch kube-system`
+        - then deploy the kubeseal controller using healm
+        - kubeseal --controller-name=sealed-secrets-argocd-application --controller-namespace kubeseal --fetch-cert
+        - kubeseal --format=yaml --cert=/Users/mdnajimahmed/Documents/LocalSystem/publicKey.pem < /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/secret.yml > /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/sealedSecret.yml
+        - rm -rf  /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/secret.yml  /Users/mdnajimahmed/Documents/LocalSystem/publicKey.pem `delete the actual secret yaml and the public key`
+        - git push
