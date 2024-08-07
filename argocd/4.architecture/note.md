@@ -34,3 +34,23 @@ In argocd everything starts with an application. An application is a set of inst
         - kubeseal --format=yaml --cert=/Users/mdnajimahmed/Documents/LocalSystem/publicKey.pem < /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/secret.yml > /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/sealedSecret.yml
         - rm -rf  /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/sealedsecret-test/secret.yml  /Users/mdnajimahmed/Documents/LocalSystem/publicKey.pem `delete the actual secret yaml and the public key`
         - git push
+        - kubectl get pods
+        - kubectl exec sealedsecret-test-db4f45c7c-zn7wj -- env | grep 'APIKEY'
+
+# Sync and Rollback
+
+- Synchronization in GitOps (Argo CD Sync)
+    - Actual state in the cluster vs desired state, happens every 3 minutes.
+    - argocd app sync argocd/nginx-argocd-application
+- Rollbacks in GitOps
+    - git revert
+    - tell argocd to move a specific git commit (and disable auto sync that happens every 3 minute). Just remove the syncpolicy from the application yaml.
+- Lab:
+    - argocd app list 
+    - argocd app history argocd/nginx-argocd-application
+    - argocd app rollback argocd/nginx-argocd-application 2 , the app is reverted to it's previous stable version but it is out of sync.
+    - This is faster that gitops process, this is prod affecting real users. Then we can revert and review and do postmortem.
+
+
+
+
