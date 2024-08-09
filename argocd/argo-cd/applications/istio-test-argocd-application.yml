@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application 
 metadata:
-  name: nginx-argocd-application
+  name: istio-test-argocd-application
   namespace: argocd # Must be the same namespace where argocd is installed otherwise won't work
 spec:
   project: default # collection of applications

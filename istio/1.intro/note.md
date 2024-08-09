@@ -23,3 +23,5 @@
 - kubectl create ns istio-demo
 - kubectl label ns istio-demo istio-injection=enabled --overwrite
 - deploy the app using argocd
+- kubectl get svc -n istio-system
+- curl -H "Host: nginx-app.demo" 34.143.188.232
