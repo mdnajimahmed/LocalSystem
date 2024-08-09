@@ -8,3 +8,4 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 - brew install argocd
 - argocd login localhost:8080 --insecure
 - argocd account update-password --current-password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --new-password @rgo@dmin^01
+- https://github.com/GoogleCloudPlatform/community/blob/master/archived/nginx-ingress-gke/index.md `setup nginx ingress to gke`
