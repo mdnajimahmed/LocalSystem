@@ -18,3 +18,8 @@
 ## Installation:
 - kubectl cluster-info
 - kubectl get crd | grep 'istio.io' | wc -l
+
+# Test:
+- kubectl create ns istio-demo
+- kubectl label ns istio-demo istio-injection=enabled --overwrite
+- deploy the app using argocd
