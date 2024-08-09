@@ -25,4 +25,5 @@ spec:
       - ApplyOutOfSyncOnly=true
   dependsOn:
     - istio-base
+    - istiod
 

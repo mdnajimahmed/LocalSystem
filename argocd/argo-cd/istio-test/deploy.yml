@@ -42,9 +42,10 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: istio-gateway
+  name: nginx-istio-test-gateway
 spec:
   selector:
+    # kubectl describe  pod istio-ingressgateway-68b4f7f7cb-9dzcv  -n istio-system | grep 'Labels:' -A 5 
     istio: ingressgateway # Use Istio's built-in gateway
   servers:
   - port:
@@ -52,18 +53,17 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - "nginx-app.demo"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: nginx
-  namespace: istio-test
+  name: nginx-istio-test-virtual-svc
 spec:
   hosts:
   - "nginx-app.demo"
   gateways:
-  - nginx-gateway
+  - nginx-istio-test-gateway
   http:
   - route:
     - destination:
