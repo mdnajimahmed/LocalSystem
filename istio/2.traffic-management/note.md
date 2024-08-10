@@ -9,3 +9,4 @@
 - curl -H "Host: payment-service.cloud" 34.87.168.112
 - kubectl apply -f /Users/mdnajimahmed/Documents/LocalSystem/istio/2.traffic-management/debug.yml
 - kubectl exec -it busybox -- /bin/sh
+- add `34.87.168.112 payment-service.cloud` to /etc/hosts file and hit payment-service.cloud few times to see it returns both blue and green!
