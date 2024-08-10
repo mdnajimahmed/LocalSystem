@@ -6,8 +6,8 @@ argocd repo add "https://github.com/mdnajimahmed/LocalSystem.git" --username "md
 - kubectl config view
 - argocd cluster add --system-namespace argocd gke_cool-furnace-431504-e1_asia-southeast1_gke01  --- <your_k8s_context_name>
 - gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" - this command gives the api server url.
+- kubectl apply -f /Users/mdnajimahmed/Documents/LocalSystem/argocd/argo-cd/argocd.yml
 - kubectl delete -f nginx-argocd-application.yml
-
 
 # Project:
 A project in argocd is a collection of application.

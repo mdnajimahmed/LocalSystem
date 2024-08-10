@@ -12,6 +12,14 @@ spec:
     repoURL: 'https://bitnami-labs.github.io/sealed-secrets' # Which repo to watch
     # path: argocd/argo-cd/nginx # No folder to watch
     targetRevision: 2.16.1 # Chart version
+    values: |
+      resources:
+        limits:
+          cpu: 50m
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi
 
   destination:
     server: 'https://34.126.151.196' # gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" 
