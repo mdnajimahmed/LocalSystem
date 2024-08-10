@@ -13,7 +13,7 @@ spec:
     targetRevision: main # Which branch
   destination:
     server: 'https://34.126.151.196' # gcloud container clusters describe gke01 --zone asia-southeast1  --project cool-furnace-431504-e1 --format="value(endpoint)" 
-    namespace: default # The actuall namespace where the application will be installed
+    namespace: istio-demo # The actuall namespace where the application will be installed
   syncPolicy:
     automated:
       selfHeal: true # Always sync the cluster with git repo
