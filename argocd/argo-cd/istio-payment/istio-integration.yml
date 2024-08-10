@@ -1,0 +1,33 @@
+
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: payment-microservice-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+      number: 80
+      name: http 
+      protocol: HTTP
+  hosts:
+    - "payment-service.cloud"
+  
+---
+
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: payment-microservice-istio-virtualsvc
+spec:
+  hosts:
+  - "payment-service.cloud"
+  gateways:
+  - payment-microservice-istio-gateway
+  http:
+    — route:
+      - destination:
+        host: payment-microservice
+        port:
+          number: 80
