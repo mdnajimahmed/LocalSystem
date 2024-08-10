@@ -4,4 +4,8 @@
 - kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{}'   `Get the full json`
 - use chrome devtool to find the ip , ctrl + F -> paste external ip, then right click and use copy property path `status.loadBalancer.ingress[0].ip`
 - kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 
-
+- Deploy the payment service with argocd
+- kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+- curl -H "Host: payment-service.cloud" 34.87.168.112
+- kubectl apply -f /Users/mdnajimahmed/Documents/LocalSystem/istio/2.traffic-management/debug.yml
+- kubectl exec -it busybox -- /bin/sh
