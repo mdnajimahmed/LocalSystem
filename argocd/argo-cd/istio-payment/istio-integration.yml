@@ -14,7 +14,8 @@ spec:
     hosts:
     - "payment-service.cloud"
 ---
-apiVersion: networking.istio.io/v1
+
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: payment-microservice-istio-virtualsvc
@@ -24,8 +25,8 @@ spec:
   gateways:
   - payment-microservice-istio-gateway
   http:
-    — route:
-      - destination:
+  - route:
+    - destination:
         host: payment-microservice
         port:
           number: 80
