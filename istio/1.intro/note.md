@@ -28,4 +28,4 @@
 - deploy the app using argocd
 - The load balancer is created at this phase since we isntall istio gatway using helm (Not then we define gateway object)
 - kubectl get svc -n istio-system
-- curl -H "Host: nginx-app.demo" 34.143.188.232
+- curl -H "Host: nginx-app.demo" 34.143.188.232 <WOW!!! I actually got it right in the first place the whole istio arch!>

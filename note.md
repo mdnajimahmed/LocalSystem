@@ -1,0 +1,1 @@
+kubectl get pods --all-namespaces -o custom-columns='NAMESPACE:metadata.namespace,POD:metadata.name,CPU_REQUESTS:spec.containers[*].resources.requests.cpu,MEMORY_REQUESTS:spec.containers[*].resources.requests.memory,CPU_LIMITS:spec.containers[*].resources.limits.cpu,MEMORY_LIMITS:spec.containers[*].resources.limits.memory' 

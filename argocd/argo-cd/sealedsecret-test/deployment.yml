@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sealedsecret-test
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: sealedsecret-test
