@@ -51,35 +51,6 @@ async function fetchProductsDb() {
   }
 }
 
-// const mysql = require('mysql');
-// const util = require('util');
-
-// async function fetchProductsDb() {
-//   console.log("process.env.MYSQL_HOST", process.env.MYSQL_HOST)
-//   console.log("process.env.MYSQL_USER", process.env.MYSQL_USER)
-//   console.log("process.env.MYSQL_ROOT_PASSWORD", process.env.MYSQL_ROOT_PASSWORD)
-//   console.log("process.env.MYSQL_DATABASE", process.env.MYSQL_DATABASE)
-//   const conn = mysql.createConnection({
-//     host: process.env.MYSQL_HOST,
-//     user: process.env.MYSQL_USER,
-//     password: process.env.MYSQL_ROOT_PASSWORD,
-//     database: process.env.MYSQL_DATABASE
-//   });
-
-//   const query = util.promisify(conn.query).bind(conn);
-
-//   let result = []
-//   try {
-//     conn.connect();
-//     result = await query("SELECT * FROM products");
-//     console.log(result);
-//     conn.end();
-//   } catch (err) {
-//     console.error(err);
-//   }
-//   return result
-// }
-
 
 app.get('/products-yml', async (req, res) => {
   const products = await fetchProductsYaml()

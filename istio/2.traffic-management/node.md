@@ -1,0 +1,6 @@
+- get the external ip of the lb 
+- kubectl get svc -n istio-system or better kubectl get svc istio-ingressgateway  -n istio-system
+- note the external ip
+- kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{}'   `Get the full json`
+- use chrome devtool to find the ip , ctrl + F -> paste external ip, then right click and use copy property path `status.loadBalancer.ingress[0].ip`
+- kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 

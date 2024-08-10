@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy Payment Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: <%= colorScheme.background %>;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: <%= colorScheme.textColor %>;
+        }
+        .container {
+            background-color: <%= colorScheme.containerBg %>;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: <%= colorScheme.textColor %>;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: <%= colorScheme.textColor %>;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid <%= colorScheme.borderColor %>;
+            outline: none;
+        }
+        .input-group input:focus {
+            border-color: <%= colorScheme.buttonBg %>;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: <%= colorScheme.buttonBg %>;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: <%= colorScheme.buttonHoverBg %>;
+        }
+        .version {
+            margin-top: 20px;
+            font-size: 12px;
+            color: <%= colorScheme.textColor %>;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Service</h1>
+        <form>
+            <div class="input-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="input-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY">
+            </div>
+            <div class="input-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123">
+            </div>
+            <button type="submit" class="submit-btn">Pay Now</button>
+        </form>
+        <div class="version">
+            Application Version: <%= appVersion %>
+        </div>
+    </div>
+</body>
+</html>
