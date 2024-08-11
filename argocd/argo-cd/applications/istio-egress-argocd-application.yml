@@ -31,12 +31,3 @@ spec:
   dependsOn:
     - istio-base
     - istiod
-
-
-
-# global:
-#   outboundTrafficPolicy:
-#     mode: REGISTRY_ONLY
-# meshConfig:
-#   outboundTrafficPolicy:
-#     mode: REGISTRY_ONLY

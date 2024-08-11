@@ -13,7 +13,7 @@ spec:
       values: | 
         meshConfig:
           outboundTrafficPolicy:
-            mode: ALLOW_ANY
+            mode: REGISTRY_ONLY
 
   destination:
     server: 'https://34.126.151.196'
@@ -28,13 +28,3 @@ spec:
   dependsOn:
     - istio-base
 
-
-
-# helm:
-#       values: | 
-#         global:
-#           outboundTrafficPolicy:
-#             mode: REGISTRY_ONLY
-#         meshConfig:
-#           outboundTrafficPolicy:
-#             mode: REGISTRY_ONLY
