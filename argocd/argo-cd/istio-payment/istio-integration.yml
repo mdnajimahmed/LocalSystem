@@ -25,6 +25,19 @@ spec:
   gateways:
   - payment-microservice-istio-gateway
   http:
+    - name: "chrome-user-should-see-blue-site"
+      match:
+        - uri: 
+            exact: "/test-chrome"
+        - headers:
+            user-agent:
+              regex: ".*Chrome.*"
+      rewrite:
+        uri: "/"
+      route:
+      - destination:
+          host: payment-microservice
+          subset: blue
     - name: "exact-match"
       match:
       - uri:

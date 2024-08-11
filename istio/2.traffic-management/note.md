@@ -10,3 +10,14 @@
 - kubectl apply -f /Users/mdnajimahmed/Documents/LocalSystem/istio/2.traffic-management/debug.yml
 - kubectl exec -it busybox -- /bin/sh
 - add `34.87.168.112 payment-service.cloud` to /etc/hosts file and hit payment-service.cloud few times to see it returns both blue and green!
+
+
+# Path based routing
+- curl payment-service.cloud/api/version `along with the host entry in the test machine`
+- curl payment-service.cloud/api/v1/version
+- curl payment-service.cloud/api/v2/version
+
+# Header based routing
+- Chrome users should see the blue site whereas other users should see the green site
+- In the VirtualService configuration, the match conditions are combined using a logical AND between the conditions within a single match block. This means that all conditions specified in the match block must be true for the rule to apply.
+- 
