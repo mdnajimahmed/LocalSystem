@@ -8,7 +8,7 @@
 - kubectl get svc istio-ingressgateway  -n istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 - curl -H "Host: payment-service.cloud" 34.87.168.112
 - kubectl apply -f /Users/mdnajimahmed/Documents/LocalSystem/istio/2.traffic-management/debug.yml
-- kubectl exec -it busybox -- /bin/sh
+- kubectl exec -it mole -- /bin/sh
 - add `34.87.168.112 payment-service.cloud` to /etc/hosts file and hit payment-service.cloud few times to see it returns both blue and green!
 
 - This gateway configuration lets HTTPS traffic from ext-host.example.com into the mesh on port 443, but doesn’t specify any routing for the traffic.
@@ -80,3 +80,12 @@ Safari
 -  Retries can enhance service availability and application performance by making sure that calls don’t fail permanently because of transient problems such as a temporarily overloaded service or network. 
 - The interval between retries (25ms+) is variable and determined automatically by Istio, preventing the called service from being overwhelmed with requests. The default retry behavior for HTTP requests is to retry twice before returning the error.
 - ![alt text](image-9.png)
+
+# Test egress:
+- ![alt text](image-10.png)
+- kubectl get pod -l istio=egressgateway -n istio-system
+- kubectl apply -f debug.yml
+- kubectl exec mole -- curl -s https://jsonplaceholder.typicode.com/todos/1
+- kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: "
+- kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: ALLOW_ANY"
+- kubectl describe cm istio -n istio-system | grep 'argocd.argoproj.io/instance=' `it's installed by istiod`
