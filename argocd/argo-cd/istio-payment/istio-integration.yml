@@ -26,10 +26,10 @@ spec:
   - payment-microservice-istio-gateway
   http:
     - name: "chrome-user-should-see-blue-site"
-      match:
-        - uri: 
-            exact: "/test-chrome"
-        - headers:
+      match: 
+        - uri: # This is how we do and
+            exact: "/index.html"
+          headers:
             user-agent:
               regex: ".*Chrome.*"
       rewrite:
@@ -38,6 +38,17 @@ spec:
       - destination:
           host: payment-microservice
           subset: blue
+    - name: "non-chrome-user-should-see-green-site" # If came here means not chrome
+      match: 
+        - uri: 
+            exact: "/index.html"
+      rewrite:
+        uri: "/"
+      route:
+      - destination:
+          host: payment-microservice
+          subset: green
+
     - name: "exact-match"
       match:
       - uri:
