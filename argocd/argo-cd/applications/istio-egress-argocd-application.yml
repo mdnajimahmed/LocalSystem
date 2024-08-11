@@ -17,13 +17,7 @@ spec:
         labels:
           istio: egressgateway
         name: istio-egressgateway
-        global:
-          outboundTrafficPolicy:
-            mode: REGISTRY_ONLY
-        meshConfig:
-          outboundTrafficPolicy:
-            mode: REGISTRY_ONLY
-
+        
   destination:
     server: 'https://34.126.151.196'
     namespace: istio-system
@@ -38,3 +32,11 @@ spec:
     - istio-base
     - istiod
 
+
+
+# global:
+#   outboundTrafficPolicy:
+#     mode: REGISTRY_ONLY
+# meshConfig:
+#   outboundTrafficPolicy:
+#     mode: REGISTRY_ONLY
