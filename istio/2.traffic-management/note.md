@@ -85,7 +85,8 @@ Safari
 - ![alt text](image-10.png)
 - kubectl get pod -l istio=egressgateway -n istio-system
 - kubectl apply -f debug.yml
-- kubectl exec mole  -n istio-demo -- curl -s https://jsonplaceholder.typicode.com/todos/1
+- kubectl exec mole  -n istio-demo -- curl -s https://jsonplaceholder.typicode.com/todos/1 `should fail`
+- kubectl exec mole  -n istio-demo -- curl -s https://dummyjson.com/products/1 `should work`
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: "
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: ALLOW_ANY"
 - kubectl describe cm istio -n istio-system | grep 'argocd.argoproj.io/instance=' `it's installed by istiod`
