@@ -25,6 +25,21 @@ spec:
   gateways:
   - payment-microservice-istio-gateway
   http:
+    - name: "weight-based-routing.html"
+      match:
+        - uri: 
+            exact: "/weight-based-routing" 
+      rewrite: 
+        uri: "/"
+      route:
+        - destination:
+            host: payment-microservice
+            subset: blue
+          weight: 80
+        - destination:
+            host: payment-microservice
+            subset: green
+          weight: 20
     - name: "chrome-user-should-see-blue-site"
       match: 
         - uri: # This is how we do and
@@ -90,7 +105,7 @@ spec:
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: reviews-destination
+  name: payment-microservice-destrule
 spec:
   host: payment-microservice # Kubernetes service, not hostname!!!
   subsets:
