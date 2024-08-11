@@ -44,6 +44,12 @@ app.get('/', (req, res) => {
   res.render('payment', { colorScheme, appVersion });
 });
 
+app.get('/api/version', (req, res) => {
+  console.log("appVersion",appVersion)
+  res.send({appVersion});
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

@@ -14,7 +14,7 @@ spec:
     hosts:
     - "payment-service.cloud"
 ---
-
+#### BASIC #####
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
@@ -25,8 +25,54 @@ spec:
   gateways:
   - payment-microservice-istio-gateway
   http:
-  - route:
-    - destination:
-        host: payment-microservice
-        port:
-          number: 80
+    - name: "exact-match"
+      match:
+      - uri:
+          exact: "/api/version"
+      route:
+      - destination:
+          host: payment-microservice
+          subset: blue
+    - name: "prefix-v1"
+      match:
+      - uri: 
+          prefix: "/api/v1/"
+      rewrite:
+        uri: "/api/"
+      route:
+      - destination:
+          host: payment-microservice
+          subset: blue
+    - name: "prefix-v2"
+      match:
+      - uri: 
+          prefix: "/api/v2/"
+      rewrite:
+        uri: "/api/"
+      route:
+      - destination:
+          host: payment-microservice
+          subset: green
+      
+  # First lecture , simple routing
+  # - route:
+  #   - destination:
+  #       host: payment-microservice
+  #       port:
+  #         number: 80
+
+
+--- 
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: reviews-destination
+spec:
+  host: payment-microservice # Kubernetes service, not hostname!!!
+  subsets:
+  - name: blue
+    labels:
+      version: "1.0.0"
+  - name: green
+    labels:
+      version: "1.0.1"
