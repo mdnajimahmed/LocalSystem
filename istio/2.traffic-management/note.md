@@ -85,9 +85,11 @@ Safari
 - ![alt text](image-10.png)
 - kubectl get pod -l istio=egressgateway -n istio-system
 - kubectl apply -f debug.yml
-- kubectl exec mole -- curl -s https://jsonplaceholder.typicode.com/todos/1
+- kubectl exec mole  -n istio-demo -- curl -s https://jsonplaceholder.typicode.com/todos/1
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: "
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: ALLOW_ANY"
 - kubectl describe cm istio -n istio-system | grep 'argocd.argoproj.io/instance=' `it's installed by istiod`
 
 **Nothing seems to be working to outboundTrafficPolicy set to REGISTRY_ONLY, again helm showing it's ass (or rather open source helm charts showing their ass). Moving on with other lessons. Next time may be try istioctl to install install instead of helm as per documentation(which I don't like because it's not IAC/GitOps - on the other hand it's Infa - so palybook might be acceptable along with the other commands to create a k8s clsuter!)** 
+
+UPD: I found the root cause, the pod did not have namespace define, hence was deployed in default namespace which is outside of the mesh. hence the rule was not applied.
