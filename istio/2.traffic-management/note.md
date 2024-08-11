@@ -89,3 +89,5 @@ Safari
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: "
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: ALLOW_ANY"
 - kubectl describe cm istio -n istio-system | grep 'argocd.argoproj.io/instance=' `it's installed by istiod`
+
+# Nothing 
