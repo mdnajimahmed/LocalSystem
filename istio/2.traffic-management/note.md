@@ -19,5 +19,16 @@
 
 # Header based routing
 - Chrome users should see the blue site whereas other users should see the green site
-- In the VirtualService configuration, the match conditions are combined using a logical AND between the conditions within a single match block. This means that all conditions specified in the match block must be true for the rule to apply.
-- 
+- A list does OR, same element does AND.
+- Hit http://payment-service.cloud/index.html from chrome you should see blue ( given the host entry is done in your local)
+- Hit http://payment-service.cloud/index.html from any other browser you should see green
+- Reality!
+Edge!
+    ![alt text](image.png)
+Chrome
+    ![alt text](image-1.png)
+Firefox
+    ![alt text](image-2.png)
+Safari
+    ![alt text](image-3.png)
+- We can also use cookie header to do intelligent routing e.g AB teting
