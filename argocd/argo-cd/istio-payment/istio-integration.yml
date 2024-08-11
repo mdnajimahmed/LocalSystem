@@ -25,10 +25,10 @@ spec:
   gateways:
   - payment-microservice-istio-gateway
   http:
-    - name: "weight-based-routing.html"
+    - name: "weight-based-routing"
       match:
         - uri: 
-            exact: "/weight-based-routing" 
+            exact: "/weight-based-routing.html" 
       rewrite: 
         uri: "/"
       route:
