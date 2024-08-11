@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-egress-argocd-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://istio-release.storage.googleapis.com/charts
+    chart: gateway
+    targetRevision: 1.22.3
+    helm:
+      parameters:
+        - name: service.type
+          value: ClusterIP
+      values: | 
+        labels:
+          istio: egressgateway
+        name: istio-egressgateway
+
+  destination:
+    server: 'https://34.126.151.196'
+    namespace: istio-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+  dependsOn:
+    - istio-base
+    - istiod
+
