@@ -90,4 +90,4 @@ Safari
 - kubectl get configmap istio -n istio-system -o yaml | grep -o "mode: ALLOW_ANY"
 - kubectl describe cm istio -n istio-system | grep 'argocd.argoproj.io/instance=' `it's installed by istiod`
 
-# Nothing 
+**Nothing seems to be working to outboundTrafficPolicy set to REGISTRY_ONLY, again helm showing it's ass (or rather open source helm charts showing their ass). Moving on with other lessons. Next time may be try istioctl to install install instead of helm as per documentation(which I don't like because it's not IAC/GitOps - on the other hand it's Infa - so palybook might be acceptable along with the other commands to create a k8s clsuter!)** 
