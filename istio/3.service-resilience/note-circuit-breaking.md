@@ -353,4 +353,5 @@ spec:
 - we will add a new API in the previous payment microservice, this api will simulate failure that lasts about 1 minute. So if the api will be down if current-time-minute%5 == 0, it remains down for 1 minute in every minutes!!! And when it remains down, secondary service picks up the request and processes the request.
 - How outlier detection works
 ![alt text](image-1.png)
-- 
+- kubectl exec mole  -n istio-demo -- curl -s http://payment-microservice/api/message
+- curl payment-service.cloud/api/message

@@ -57,18 +57,19 @@ app.get('/api/version', (req, res) => {
 
 app.get('/api/message', (req, res) => {
   const currentTime = new Date();
-  const currentTimeStr = currentTime.toISOString().slice(0, 16);
+  const currentTimeStr = currentTime.toISOString().slice(11, 19);
   const currentMinute = currentTime.getMinutes();
   const reminder = currentMinute % 5;
   const serverName = process.env.PAYMENT_APP_VERSION === "1.0.0" ? "primary" : "secondary"
-  let message = `${serverName} : Hello from ${currentTimeStr} -> ${currentMinute} -> ${reminder}`;
+  let message = `${serverName} : Hello from ${serverName}, ${currentTimeStr} -> ${currentMinute} -> ${reminder}`;
   console.log("message",message)
 
   if( serverName === "primary" && reminder===0){
-    throw new Error(message)
+    res.status(500).send({message})
+  }else{
+    res.status(200).send({message});
   }
 
-  res.send({message});
 });
 
 
