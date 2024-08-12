@@ -356,4 +356,4 @@ spec:
 - kubectl exec mole  -n istio-demo -- curl -s http://payment-microservice/api/message
 - curl payment-service.cloud/api/message
 - verified if circuit open it does not send request.
-- 
+- kubectl exec "$FORTIO_POD" -c istio-proxy -- pilot-agent request GET stats | grep <POD_NAME> | grep pending `VVI check request stat live`
