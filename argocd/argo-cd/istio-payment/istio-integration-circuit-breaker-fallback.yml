@@ -43,9 +43,9 @@ spec:
   host: payment-microservice
   trafficPolicy:
     outlierDetection:
-      consecutiveErrors: 5
+      consecutiveErrors: 1
       interval: 10s
-      baseEjectionTime: 30s
+      baseEjectionTime: 1m
       maxEjectionPercent: 100
   subsets:
   - name: blue
