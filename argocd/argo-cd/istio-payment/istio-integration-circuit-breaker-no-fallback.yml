@@ -24,9 +24,6 @@ spec:
   - payment-microservice-istio-gateway
   http:
     - name: "circuit-breaker"
-      match:
-        - uri: 
-            exact: "/api/message" 
       route:
         - destination:
             host: payment-microservice # Kubernetes service, not hostname!!!
@@ -39,18 +36,18 @@ metadata:
   name: payment-microservice-destrule
 spec:
   host: payment-microservice # Kubernetes service, not hostname!!!
-  trafficPolicy:
-    connectionPool:
-      http:
-        http1MaxPendingRequests: 10 
-        maxRequestsPerConnection: 10
-      tcp:
-        maxConnections: 10
-    outlierDetection:
-      baseEjectionTime: 1m # Proxy will not call the api for 1m, then next evaluation cycle will start
-      consecutive5xxErrors: 3
-      interval: 10s 
-      maxEjectionPercent: 100
+  # trafficPolicy:
+  #   connectionPool:
+  #     http:
+  #       http1MaxPendingRequests: 10 
+  #       maxRequestsPerConnection: 10
+  #     tcp:
+  #       maxConnections: 10
+  #   outlierDetection:
+  #     baseEjectionTime: 1m # Proxy will not call the api for 1m, then next evaluation cycle will start
+  #     consecutive5xxErrors: 3
+  #     interval: 10s 
+  #     maxEjectionPercent: 100
   subsets:
   - name: blue
     labels:
