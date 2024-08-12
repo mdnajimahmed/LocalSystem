@@ -28,10 +28,11 @@ spec:
     - destination:
         host: payment-microservice # Kubernetes service, not hostname!!!
         subset: blue
-    fallback:
-      destination:
+  - route:
+    - destination:
         host: payment-microservice # Kubernetes service, not hostname!!!
         subset: green
+
 
 --- 
 apiVersion: networking.istio.io/v1
