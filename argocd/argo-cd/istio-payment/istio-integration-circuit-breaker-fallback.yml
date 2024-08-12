@@ -26,7 +26,23 @@ spec:
   http:
   - route:
     - destination:
-        host: payment-microservice # Kubernetes service, not hostname!!!
+        host: payment-microservice
+        subset: blue
+      weight: 100
+    - destination:
+        host: payment-microservice
+        subset: green
+      weight: 0
+  - route:
+    - destination:
+        host: payment-microservice
+        subset: green
+      weight: 100
+
+  # http:
+  # - route:
+  #   - destination:
+  #       host: payment-microservice # Kubernetes service, not hostname!!!
 
 --- 
 apiVersion: networking.istio.io/v1
