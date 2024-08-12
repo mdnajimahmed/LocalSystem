@@ -1,72 +1,64 @@
-# apiVersion: networking.istio.io/v1
-# kind: Gateway
-# metadata:
-#   name: payment-microservice-istio-gateway
-#   # namespace: istio-system
-# spec:
-#   selector:
-#     istio: ingressgateway # use istio default controller
-#   servers:
-#   - port:
-#       number: 80
-#       name: http
-#       protocol: HTTP
-#     hosts:
-#     - "payment-service.cloud"
-# ---
-# #### BASIC #####
-# apiVersion: networking.istio.io/v1
-# kind: VirtualService
-# metadata:
-#   name: payment-microservice-istio-virtualsvc
-# spec:
-#   hosts:
-#   - "payment-service.cloud"
-#   gateways:
-#   - payment-microservice-istio-gateway
-#   http:
-#     - name: "circuit-breaker"
-#       match:
-#         - uri: 
-#             exact: "/api/message" 
-#       route:
-#         - destination:
-#             host: payment-microservice # Kubernetes service, not hostname!!!
-#             subset: blue
-#           # weight: 80
-#         # - destination:
-#         #     host: payment-microservice
-#         #     subset: green
-#           # weight: 20
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: payment-microservice-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "payment-service.cloud"
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: payment-microservice-istio-virtualsvc
+spec:
+  hosts:
+  - "payment-service.cloud"
+  gateways:
+  - payment-microservice-istio-gateway
+  http:
+  - route:
+    - destination:
+        host: payment-microservice # Kubernetes service, not hostname!!!
+        subset: blue
+    weight: 100 # Initially all traffic to primary
+  - route:
+    - destination:
+        host: payment-microservice # Kubernetes service, not hostname!!!
+        subset: green
+    weight: 0 # Initially no traffic to secondary
 
 
-# --- 
-# apiVersion: networking.istio.io/v1
-# kind: DestinationRule
-# metadata:
-#   name: payment-microservice-destrule
-# spec:
-#   host: payment-microservice # Kubernetes service, not hostname!!!
-#   trafficPolicy:
-#     connectionPool:
-#       http:
-#         http1MaxPendingRequests: 10 
-#         maxRequestsPerConnection: 10
-#       tcp:
-#         maxConnections: 10
-#     outlierDetection:
-#       baseEjectionTime: 1m # For approxamtely 1 minute no response coming from the API(even if it's up)
-#       consecutive5xxErrors: 1
-#       interval: 10s 
-#       maxEjectionPercent: 100
-#   subsets:
-#   - name: blue
-#     labels:
-#       version: "1.0.0"
-#   - name: purple
-#     labels:
-#       version: "1.0.2"
-#   - name: green
-#     labels:
-#       version: "1.0.1"
+--- 
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: payment-microservice-destrule
+spec:
+  host: payment-microservice # Kubernetes service, not hostname!!!
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 10 
+        maxRequestsPerConnection: 10
+      tcp:
+        maxConnections: 10
+    outlierDetection:
+      baseEjectionTime: 1m # Proxy will not call the api for 1m, then next evaluation cycle will start
+      consecutive5xxErrors: 1
+      interval: 10s 
+      maxEjectionPercent: 100
+  subsets:
+  - name: blue
+    labels:
+      version: "1.0.0"
+  - name: green
+    labels:
+      version: "1.0.1"
     

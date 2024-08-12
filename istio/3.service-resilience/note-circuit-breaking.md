@@ -355,3 +355,5 @@ spec:
 ![alt text](image-1.png)
 - kubectl exec mole  -n istio-demo -- curl -s http://payment-microservice/api/message
 - curl payment-service.cloud/api/message
+- verified if circuit open it does not send request.
+- 
