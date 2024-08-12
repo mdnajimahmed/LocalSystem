@@ -50,6 +50,28 @@ app.get('/api/version', (req, res) => {
 });
 
 
+app.get('/api/version', (req, res) => {
+  console.log("appVersion",appVersion)
+  res.send({appVersion});
+});
+
+app.get('/api/message', (req, res) => {
+  const currentTime = new Date();
+  const currentTimeStr = currentTime.toISOString().slice(0, 16);
+  const currentMinute = currentTime.getMinutes();
+  const reminder = currentMinute % 5;
+  const serverName = process.env.PAYMENT_APP_VERSION === "1.0.0" ? "primary" : "secondary"
+  let message = `${serverName} : Hello from ${currentTimeStr} -> ${currentMinute} -> ${reminder}`;
+  console.log("message",message)
+
+  if( serverName === "primary" && reminder===0){
+    throw new Error(message)
+  }
+
+  res.send({message});
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

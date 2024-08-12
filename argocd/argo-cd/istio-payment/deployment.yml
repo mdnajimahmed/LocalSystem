@@ -48,6 +48,7 @@ spec:
       containers:
       - name: payment-microservice
         image: ivplay4689/payment-microservice-nodejs
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"

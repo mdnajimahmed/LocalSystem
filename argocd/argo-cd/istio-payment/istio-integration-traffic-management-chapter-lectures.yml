@@ -1,0 +1,126 @@
+# apiVersion: networking.istio.io/v1
+# kind: Gateway
+# metadata:
+#   name: payment-microservice-istio-gateway
+#   # namespace: istio-system
+# spec:
+#   selector:
+#     istio: ingressgateway # use istio default controller
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     hosts:
+#     - "payment-service.cloud"
+# ---
+# #### BASIC #####
+# apiVersion: networking.istio.io/v1
+# kind: VirtualService
+# metadata:
+#   name: payment-microservice-istio-virtualsvc
+# spec:
+#   hosts:
+#   - "payment-service.cloud"
+#   gateways:
+#   - payment-microservice-istio-gateway
+#   http:
+#     - name: "weight-based-routing"
+#       match:
+#         - uri: 
+#             exact: "/weight-based-routing.html" 
+#       rewrite: 
+#         uri: "/"
+#       route:
+#         - destination:
+#             host: payment-microservice
+#             subset: blue
+#           weight: 80
+#         - destination:
+#             host: payment-microservice
+#             subset: green
+#           weight: 20
+#     - name: "chrome-user-should-see-blue-site"
+#       match: 
+#         - uri: # This is how we do and
+#             exact: "/index.html"
+#           headers:
+#             user-agent:
+#               regex: ".*Chrome.*"
+#       rewrite:
+#         uri: "/"
+#       route:
+#       - destination:
+#           host: payment-microservice
+#           subset: blue
+#     - name: "non-chrome-user-should-see-green-site" # If came here means not chrome
+#       match: 
+#         - uri: 
+#             exact: "/index.html"
+#       rewrite:
+#         uri: "/"
+#       route:
+#       - destination:
+#           host: payment-microservice
+#           subset: green
+
+#     - name: "exact-match"
+#       match:
+#       - uri:
+#           exact: "/api/version"
+#       route:
+#       - destination:
+#           host: payment-microservice
+#           subset: blue
+#     - name: "prefix-v1"
+#       match:
+#       - uri: 
+#           prefix: "/api/v1/"
+#       rewrite:
+#         uri: "/api/"
+#       route:
+#       - destination:
+#           host: payment-microservice
+#           subset: blue
+#     - name: "prefix-v2"
+#       match:
+#       - uri: 
+#           prefix: "/api/v2/"
+#       rewrite:
+#         uri: "/api/"
+#       route:
+#       - destination:
+#           host: payment-microservice
+#           subset: green
+      
+#   # First lecture , simple routing
+#   # - route:
+#   #   - destination:
+#   #       host: payment-microservice
+#   #       port:
+#   #         number: 80
+
+
+# --- 
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: payment-microservice-destrule
+# spec:
+#   host: payment-microservice # Kubernetes service, not hostname!!!
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: RANDOM
+#   subsets:
+#   - name: blue
+#     labels:
+#       version: "1.0.0"
+#   - name: purple
+#     labels:
+#       version: "1.0.2"
+#   - name: green
+#     labels:
+#       version: "1.0.1"
+#     trafficPolicy:
+#       loadBalancer:
+#         simple: ROUND_ROBIN # so only blue set uses round robin, overwritting the parent setting. green and purple uses parent setting RANDOM for loadbalancing.
