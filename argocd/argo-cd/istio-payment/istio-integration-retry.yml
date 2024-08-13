@@ -1,0 +1,42 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: payment-microservice-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "payment-service.cloud"
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: payment-microservice-istio-virtualsvc
+spec:
+  hosts:
+  - "payment-service.cloud"
+  gateways:
+  - payment-microservice-istio-gateway
+  http:
+  - route:
+    - destination:
+        host: payment-microservice
+    retries:
+      attempts: 3
+      # perTryTimeout: 2s
+      retryOn: 5xx,gateway-error, reset,reset-before-request,connect-failure,envoy-ratelimited,retriable-4xx,refused-stream,retriable-status-codes,retriable-headers,http3-post-connect-failure,cancelled,deadline-exceeded,internal,resource-exhausted,unavailable
+# HTTP retryOn: 5xx,gateway-error, reset,reset-before-request,connect-failure,envoy-ratelimited,retriable-4xx,refused-stream,retriable-status-codes,retriable-headers,http3-post-connect-failure
+
+# GRPC retryOn: cancelled,deadline-exceeded,internal,resource-exhausted,unavailable
+--- 
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: payment-microservice-destrule
+spec:
+  host: payment-microservice # Kubernetes service, not hostname!!!

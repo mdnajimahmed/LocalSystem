@@ -50,11 +50,6 @@ app.get('/api/version', (req, res) => {
 });
 
 
-app.get('/api/version', (req, res) => {
-  console.log("appVersion",appVersion)
-  res.send({appVersion});
-});
-
 // this api remains down when current time's minute is divisible by 5.
 // e.g this api is be down at 10.15, 11.30 etc
 app.get('/api/message', (req, res) => {
@@ -78,6 +73,18 @@ app.get('/api/sleep', async (req, res) => {
   const sleepTime = Math.floor(Math.random() * (2000 - 500 + 1)) + 500;
   await new Promise(resolve => setTimeout(resolve, sleepTime));
   res.send(`Slept for ${sleepTime} milliseconds`);
+});
+
+
+// fails with 33% probability with fixed 1000ms response time
+app.get('/api/unstable', async (req, res) => {
+  const sleepTime = 1000;
+  await new Promise(resolve => setTimeout(resolve, sleepTime));
+  if(Math.floor(Math.random()*3) == 2){
+    res.status(200).send(`I am healthy :) `);
+  }else{
+    res.status(500).send(`I am not feeling well :( `);
+  }
 });
 
 app.listen(port, () => {

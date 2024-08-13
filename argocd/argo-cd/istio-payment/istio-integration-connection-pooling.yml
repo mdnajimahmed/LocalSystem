@@ -1,67 +1,67 @@
-apiVersion: networking.istio.io/v1
-kind: Gateway
-metadata:
-  name: payment-microservice-istio-gateway
-spec:
-  selector:
-    istio: ingressgateway # use istio default controller
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "payment-service.cloud"
----
-apiVersion: networking.istio.io/v1
-kind: VirtualService
-metadata:
-  name: payment-microservice-istio-virtualsvc
-spec:
-  hosts:
-  - "payment-service.cloud"
-  gateways:
-  - payment-microservice-istio-gateway
-  http:
-  - route:
-    - destination:
-        host: payment-microservice
+# apiVersion: networking.istio.io/v1
+# kind: Gateway
+# metadata:
+#   name: payment-microservice-istio-gateway
+# spec:
+#   selector:
+#     istio: ingressgateway # use istio default controller
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     hosts:
+#     - "payment-service.cloud"
+# ---
+# apiVersion: networking.istio.io/v1
+# kind: VirtualService
+# metadata:
+#   name: payment-microservice-istio-virtualsvc
+# spec:
+#   hosts:
+#   - "payment-service.cloud"
+#   gateways:
+#   - payment-microservice-istio-gateway
+#   http:
+#   - route:
+#     - destination:
+#         host: payment-microservice
 
---- 
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: payment-microservice-destrule
-spec:
-  host: payment-microservice # Kubernetes service, not hostname!!!
-  trafficPolicy:
-    connectionPool: # Choke
-      tcp:
-        maxConnections: 1
-      http:
-        http1MaxPendingRequests: 1
-        maxRequestsPerConnection: 1
+# --- 
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: payment-microservice-destrule
+# spec:
+#   host: payment-microservice # Kubernetes service, not hostname!!!
+#   trafficPolicy:
+#     connectionPool: # Choke
+#       tcp:
+#         maxConnections: 1
+#       http:
+#         http1MaxPendingRequests: 1
+#         maxRequestsPerConnection: 1
 
 
       
-    # Use it for production , the one active is just for testing
+#     # Use it for production , the one active is just for testing
 
-    # connectionPool:
-    #   tcp:
-    #     maxConnections: 100 # istio example value
-    #     connectTimeout: 5s
-    #     tcpKeepalive:
-    #       interval: 30s
-    #       timeout: 10s
-    #     maxConnectionDuration: 1h
-    #     idleTimeout: 10m
-    #   http:
-    #     http1MaxPendingRequests: 10
-    #     # Maximum number of active requests to a destination. Default 2^32-1. 
-    #     # Please note that this is applicable to both HTTP/1.1 and HTTP2.
-    #     # tcp.maxConnections * http.maxRequestsPerConnection
-    #     http2MaxRequests: 1000 # istio example value 
-    #     maxRequestsPerConnection: 10  # istio example value
-    #     maxRetries: 3
-    #     idleTimeout: 10m
+#     # connectionPool:
+#     #   tcp:
+#     #     maxConnections: 100 # istio example value
+#     #     connectTimeout: 5s
+#     #     tcpKeepalive:
+#     #       interval: 30s
+#     #       timeout: 10s
+#     #     maxConnectionDuration: 1h
+#     #     idleTimeout: 10m
+#     #   http:
+#     #     http1MaxPendingRequests: 10
+#     #     # Maximum number of active requests to a destination. Default 2^32-1. 
+#     #     # Please note that this is applicable to both HTTP/1.1 and HTTP2.
+#     #     # tcp.maxConnections * http.maxRequestsPerConnection
+#     #     http2MaxRequests: 1000 # istio example value 
+#     #     maxRequestsPerConnection: 10  # istio example value
+#     #     maxRetries: 3
+#     #     idleTimeout: 10m
     
