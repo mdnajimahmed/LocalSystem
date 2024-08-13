@@ -26,7 +26,7 @@ spec:
   - route:
     - destination:
         host: payment-microservice
-        timeout: 5s
+    timeout: 5s
 
 --- 
 apiVersion: networking.istio.io/v1
