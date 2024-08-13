@@ -29,9 +29,8 @@ spec:
     retries:
       attempts: 3
       # perTryTimeout: 2s
-      retryOn: 5xx,gateway-error, reset,reset-before-request,connect-failure,envoy-ratelimited,retriable-4xx,refused-stream,retriable-status-codes,retriable-headers,http3-post-connect-failure,cancelled,deadline-exceeded,internal,resource-exhausted,unavailable
+      retryOn: 5xx
 # HTTP retryOn: 5xx,gateway-error, reset,reset-before-request,connect-failure,envoy-ratelimited,retriable-4xx,refused-stream,retriable-status-codes,retriable-headers,http3-post-connect-failure
-
 # GRPC retryOn: cancelled,deadline-exceeded,internal,resource-exhausted,unavailable
 --- 
 apiVersion: networking.istio.io/v1

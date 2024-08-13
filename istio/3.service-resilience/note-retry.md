@@ -1,2 +1,3 @@
 - we will use the same /api/unstable that fails with 33% probability with fixed 2000ms response time.
-- 
+-  kubectl rollout restart deployment payment-microservice-v1 payment-microservice-v2 -n istio-demo
+- ./curlloop.sh payment-service.cloud/api/unstable
