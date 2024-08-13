@@ -37,12 +37,6 @@
 # spec:
 #   host: payment-microservice # Kubernetes service, not hostname!!!
 #   trafficPolicy:
-#     connectionPool:
-#       http:
-#         http1MaxPendingRequests: 10 
-#         maxRequestsPerConnection: 10
-#       tcp:
-#         maxConnections: 10
 #     outlierDetection:
 #       baseEjectionTime: 1m # Proxy will not call the api for 1m, then next evaluation cycle will start
 #       consecutive5xxErrors: 1
