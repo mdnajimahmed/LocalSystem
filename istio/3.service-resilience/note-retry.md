@@ -1,3 +1,4 @@
 - we will use the same /api/unstable that fails with 33% probability with fixed 2000ms response time.
 -  kubectl rollout restart deployment payment-microservice-v1 payment-microservice-v2 -n istio-demo
 - ./curlloop.sh payment-service.cloud/api/unstable
+- We can also use postman and see that we are getting almost always getting I am getting ok but in 2s, 3s. if you see 500, for sure it's more than 3s(after all retries failed)!
