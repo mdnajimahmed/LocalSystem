@@ -39,3 +39,25 @@ Here tcp settings are used , and https settings are used only to close gap that 
 ![alt text](image-17.png)
 ![alt text](image-18.png)
 ![alt text](image-19.png)
+
+# Moment of truth
+- kubectl exec mole-598c649d86-qbdtm  -n istio-demo -c fortio -- /usr/bin/fortio load -c 1 -qps 0 -n 30 -loglevel Warning http://payment-microservice/api/version
+```
+Code 200 : 30 (100.0 %)
+```
+- kubectl exec mole-598c649d86-qbdtm  -n istio-demo -c fortio -- /usr/bin/fortio load -c 2 -qps 0 -n 30 -loglevel Warning http://payment-microservice/api/version
+```
+Code 200 : 11 (36.7 %)
+Code 503 : 19 (63.3 %)
+```
+- kubectl exec mole-598c649d86-qbdtm  -n istio-demo -c fortio -- /usr/bin/fortio load -c 3 -qps 0 -n 30 -loglevel Warning http://payment-microservice/api/version
+```
+Code 200 : 14 (46.7 %)
+Code 503 : 16 (53.3 %)
+```
+
+- kubectl exec mole-598c649d86-qbdtm  -n istio-demo -c fortio -- /usr/bin/fortio load -c 4 -qps 0 -n 30 -loglevel Warning http://payment-microservice/api/version
+```
+Code 200 : 6 (20.0 %)
+Code 503 : 24 (80.0 %)
+```
