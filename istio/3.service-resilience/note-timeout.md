@@ -1,0 +1,3 @@
+- kubectl rollout restart deployment payment-microservice-v1 payment-microservice-v2 -n istio-demo
+- New endpoint added to the payment microservice called sleep that responds between .5 sec to 2 sec.
+- curl payment-service.cloud/api/sleep

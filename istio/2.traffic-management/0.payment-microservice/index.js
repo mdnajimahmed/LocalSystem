@@ -55,6 +55,8 @@ app.get('/api/version', (req, res) => {
   res.send({appVersion});
 });
 
+// this api remains down when current time's minute is divisible by 5.
+// e.g this api is be down at 10.15, 11.30 etc
 app.get('/api/message', (req, res) => {
   const currentTime = new Date();
   const currentTimeStr = currentTime.toISOString().slice(11, 19);
@@ -69,9 +71,14 @@ app.get('/api/message', (req, res) => {
   }else{
     res.status(200).send({message});
   }
-
 });
 
+// randomsly sleeps 500 ms to 2000ms (.5 sec to 2 sec)
+app.get('/api/sleep', async (req, res) => {
+  const sleepTime = Math.floor(Math.random() * (2000 - 500 + 1)) + 500;
+  await new Promise(resolve => setTimeout(resolve, sleepTime));
+  res.send(`Slept for ${sleepTime} milliseconds`);
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
