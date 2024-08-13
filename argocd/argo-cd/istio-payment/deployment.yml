@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: payment-microservice-v1
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: payment-microservice
@@ -35,6 +36,7 @@ kind: Deployment
 metadata:
   name: payment-microservice-v2
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: payment-microservice
@@ -61,7 +63,47 @@ spec:
         env:
          - name: PAYMENT_APP_VERSION
            value: "1.0.1"
-          
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mole
+  template:
+    metadata:
+      labels:
+        app: mole
+    spec:
+    containers:
+    - name: curl
+      image: curlimages/curl:8.9.1
+      command: ["sh", "-c", "while true; do sleep 3600; done"]
+      resources:
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+    - name: fortio
+      image: fortio/fortio:latest_release
+      imagePullPolicy: Always
+      ports:
+      - containerPort: 8080
+        name: http-fortio
+      - containerPort: 8079
+        name: grpc-ping
+      resources:
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
 ---
 apiVersion: v1
 kind: Service
@@ -73,3 +115,4 @@ spec:
   ports:
   - port: 80
     targetPort: 3000
+---
