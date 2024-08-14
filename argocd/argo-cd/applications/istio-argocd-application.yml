@@ -11,14 +11,9 @@ spec:
     targetRevision: 1.22.3
     helm:
       values: | 
-        mixer:
-          policy:
-            enabled: true
-        global:
-          disablePolicyChecks: false
         meshConfig:
           outboundTrafficPolicy:
-            mode: ALLOW_ANY
+            mode: REGISTRY_ONLY
           mixer:
             policy:
               enabled: true
