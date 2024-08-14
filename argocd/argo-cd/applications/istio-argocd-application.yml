@@ -18,7 +18,12 @@ spec:
           disablePolicyChecks: false
         meshConfig:
           outboundTrafficPolicy:
-            mode: REGISTRY_ONLY
+            mode: ALLOW_ANY
+          mixer:
+            policy:
+              enabled: true
+          global:
+            disablePolicyChecks: false
 
   destination:
     server: 'https://34.126.151.196'
