@@ -34,6 +34,17 @@ spec:
     route:
       - destination:
           host: payment-microservice
+  - fault:
+      abort:
+        httpStatus: 501
+        percentage:
+          value: 100
+    match:
+      - uri: 
+          prefix: "/api/sleep"
+    route:
+      - destination:
+          host: payment-microservice
   - route:
     - destination:
         host: payment-microservice
