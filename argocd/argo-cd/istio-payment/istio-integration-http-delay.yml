@@ -34,17 +34,15 @@ spec:
     route:
       - destination:
           host: payment-microservice
-          subset: v1
   - route:
     - destination:
         host: payment-microservice
-        subset: v1
 
---- 
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: payment-microservice-destrule
-spec:
-  host: payment-microservice # Kubernetes service, not hostname!!!
+# --- 
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: payment-microservice-destrule
+# spec:
+#   host: payment-microservice # Kubernetes service, not hostname!!!
     
