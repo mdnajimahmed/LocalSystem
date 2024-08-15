@@ -224,7 +224,9 @@ spec:
           vhost:
 # name equals empty meansing , always call rate limit service, 
 # carefull, it might add latency to all services!!!
-            name: "payment-service" 
+# Check documentation latter how to fine tune by host, and what does this field actually do
+# for now looks like only putting empty works.
+            name: "" 
             route:
               action: ANY
       patch:
