@@ -35,3 +35,7 @@ N sidecars. So we can theoritically put ratelimiting on each of them. The one we
 - Task 01: Apply rate limit to all path /api/version under host payment-service.cloud
     - 1 api call per minute, user will be identified by Authorization Header
     - But in mesh communication should allow 1 api call per 30 second per user, user will be identified by Authorization Header (local rate limiter)
+
+# Lesson learn:
+- Unexpected Leaky abstraction from istio, have to directly understand envoy to implement rate limiting.
+- Some other day we will explore envoy proxy and understand all the config param better. For now resuming istio...
