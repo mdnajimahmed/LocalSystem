@@ -32,9 +32,9 @@ spec:
       - uri: 
           prefix: "/api/version"
     route:
-    - destination:
-        host: payment-microservice
-        subset: v1
+      - destination:
+          host: payment-microservice
+          subset: v1
   - route:
     - destination:
         host: payment-microservice
