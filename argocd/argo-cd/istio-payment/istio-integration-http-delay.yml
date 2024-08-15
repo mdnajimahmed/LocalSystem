@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: payment-microservice-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "payment-service.cloud"
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: payment-microservice-istio-virtualsvc
+spec:
+  hosts:
+  - "payment-service.cloud"
+  gateways:
+  - payment-microservice-istio-gateway
+  http:
+  - fault:
+      delay:
+        percentage:
+          value: 100
+        fixedDelay: 5s
+    match:
+      - uri: 
+          prefix: "/api/version"
+    route:
+    - destination:
+        host: payment-microservice
+        subset: v1
+
+--- 
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: payment-microservice-destrule
+spec:
+  host: payment-microservice # Kubernetes service, not hostname!!!
+    
