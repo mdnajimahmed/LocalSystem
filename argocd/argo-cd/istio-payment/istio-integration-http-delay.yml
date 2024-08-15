@@ -37,7 +37,7 @@ spec:
         subset: v1
   - route:
     - destination:
-        host: ratings
+        host: payment-microservice
         subset: v1
 
 --- 
