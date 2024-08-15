@@ -224,7 +224,7 @@ spec:
           vhost:
 # name equals empty meansing , always call rate limit service, 
 # carefull, it might add latency to all services!!!
-            name: "payment-service.cloud" 
+            name: "" 
             route:
               action: ANY
       patch:
