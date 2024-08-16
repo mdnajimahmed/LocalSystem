@@ -51,7 +51,6 @@ metadata:
 spec:
   workloadSelector:
     labels:
-      version: "1.0.0"
       app: payment-microservice
   configPatches:
     - applyTo: HTTP_FILTER
