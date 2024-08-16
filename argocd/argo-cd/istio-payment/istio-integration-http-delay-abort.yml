@@ -1,51 +1,51 @@
-# apiVersion: networking.istio.io/v1
-# kind: Gateway
-# metadata:
-#   name: payment-microservice-istio-gateway
-# spec:
-#   selector:
-#     istio: ingressgateway # use istio default controller
-#   servers:
-#   - port:
-#       number: 80
-#       name: http
-#       protocol: HTTP
-#     hosts:
-#     - "payment-service.cloud"
-# ---
-# apiVersion: networking.istio.io/v1
-# kind: VirtualService
-# metadata:
-#   name: payment-microservice-istio-virtualsvc
-# spec:
-#   hosts:
-#   - "payment-service.cloud"
-#   gateways:
-#   - payment-microservice-istio-gateway
-#   http:
-#   - fault:
-#       delay:
-#         percentage:
-#           value: 100
-#         fixedDelay: 5s
-#     match:
-#       - uri: 
-#           prefix: "/api/version"
-#     route:
-#       - destination:
-#           host: payment-microservice
-#   - fault:
-#       abort:
-#         httpStatus: 501
-#         percentage:
-#           value: 100
-#     match:
-#       - uri: 
-#           prefix: "/api/sleep"
-#     route:
-#       - destination:
-#           host: payment-microservice
-#   - route:
-#     - destination:
-#         host: payment-microservice
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: payment-microservice-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "payment-service.cloud"
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: payment-microservice-istio-virtualsvc
+spec:
+  hosts:
+  - "payment-service.cloud"
+  gateways:
+  - payment-microservice-istio-gateway
+  http:
+  - fault:
+      delay:
+        percentage:
+          value: 100
+        fixedDelay: 5s
+    match:
+      - uri: 
+          prefix: "/api/version"
+    route:
+      - destination:
+          host: payment-microservice
+  - fault:
+      abort:
+        httpStatus: 501
+        percentage:
+          value: 100
+    match:
+      - uri: 
+          prefix: "/api/sleep"
+    route:
+      - destination:
+          host: payment-microservice
+  - route:
+    - destination:
+        host: payment-microservice
 
