@@ -57,11 +57,11 @@ spec:
     - applyTo: HTTP_FILTER
       match:
         context: SIDECAR_INBOUND
-        routeConfiguration:
-          vhost:
-            routes:
-              - match:
-                  prefix: "/api/version"
+        # routeConfiguration:
+        #   vhost:
+        #     routes:
+        #       - match:
+        #           prefix: "/api/version"
         listener:
           filterChain:
             filter:
