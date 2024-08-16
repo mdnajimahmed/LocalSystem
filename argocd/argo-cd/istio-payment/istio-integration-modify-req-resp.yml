@@ -44,6 +44,7 @@ spec:
       version: "1.0.1"
   
 --- 
+
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -51,16 +52,12 @@ metadata:
 spec:
   workloadSelector:
     labels:
+      # version: "1.0.0"
       app: payment-microservice
   configPatches:
     - applyTo: HTTP_FILTER
       match:
         context: SIDECAR_INBOUND
-        # routeConfiguration:
-        #   vhost:
-        #     routes:
-        #       - match:
-        #           prefix: "/api/version"
         listener:
           filterChain:
             filter:
@@ -81,6 +78,67 @@ spec:
               function envoy_on_response(request_handle)
                 -- add response specific logic here
               end
+
+    - applyTo: VIRTUAL_HOST
+      match:
+        context: SIDECAR_INBOUND
+        routeConfiguration:
+          vhost:
+            routes:
+              - match:
+                  prefix: "/api/version"
+      patch:
+        operation: MERGE
+        value:
+          name: envoy.lua
+          typed_config:
+            "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+            inlineCode: |
+              function envoy_on_request(request_handle)
+                -- send back static response and do not continue
+                request_handle: respond({ [":status"] = "200" }, "Envoy Filtered Message")
+              end
+              function envoy_on_response(request_handle)
+                -- add response specific logic here
+              end
+
+# apiVersion: networking.istio.io/v1alpha3
+# kind: EnvoyFilter
+# metadata:
+#   name: lua-envoy-filter-modify-req-resp
+# spec:
+#   workloadSelector:
+#     labels:
+#       app: payment-microservice
+#   configPatches:
+#     - applyTo: HTTP_FILTER
+#       match:
+#         context: SIDECAR_INBOUND
+#         # routeConfiguration:
+#         #   vhost:
+#         #     routes:
+#         #       - match:
+#         #           prefix: "/api/version"
+#         listener:
+#           filterChain:
+#             filter:
+#               name: "envoy.http_connection_manager"
+#               subFilter:
+#                 name: "envoy.router"
+#       patch:
+#         operation: INSERT_BEFORE
+#         value:
+#           name: envoy.lua
+#           typed_config:
+#             "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+#             inlineCode: |
+#               function envoy_on_request(request_handle)
+#                 -- send back static response and do not continue
+#                 request_handle: respond({ [":status"] = "200" }, "Envoy Filtered Message")
+#               end
+#               function envoy_on_response(request_handle)
+#                 -- add response specific logic here
+#               end
 
 # apiVersion: networking.istio.io/v1alpha3 
 # kind: EnvoyFilter
