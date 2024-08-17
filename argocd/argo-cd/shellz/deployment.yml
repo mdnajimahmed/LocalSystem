@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shellz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shellz
+  template:
+    metadata:
+      labels:
+        app: shellz
+    spec:
+      containers:
+      - name: curl
+        image: curlimages/curl:8.9.1
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+      - name: fortio
+        image: fortio/fortio:latest_release
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http-fortio
+        - containerPort: 8079
+          name: grpc-ping
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
