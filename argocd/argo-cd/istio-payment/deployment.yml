@@ -26,6 +26,24 @@ spec:
             cpu: "100m"
         ports:
         - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /api/version
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /api/version
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
         env:
          - name: PAYMENT_APP_VERSION
            value: "1.0.0"
@@ -63,6 +81,24 @@ spec:
         env:
          - name: PAYMENT_APP_VERSION
            value: "1.0.1"
+        readinessProbe:
+          httpGet:
+            path: /api/version
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /api/version
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
 --- 
 apiVersion: apps/v1
 kind: Deployment
