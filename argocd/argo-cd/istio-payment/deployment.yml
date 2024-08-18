@@ -28,7 +28,7 @@ spec:
         - containerPort: 3000
         readinessProbe:
           httpGet:
-            path: /api/version
+            path: /ready
             port: 3000
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -37,7 +37,7 @@ spec:
           failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /api/version
+            path: /live
             port: 3000
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -83,7 +83,7 @@ spec:
            value: "1.0.1"
         readinessProbe:
           httpGet:
-            path: /api/version
+            path: /ready
             port: 3000
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -92,7 +92,7 @@ spec:
           failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /api/version
+            path: /live
             port: 3000
           initialDelaySeconds: 5
           periodSeconds: 10

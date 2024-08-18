@@ -64,6 +64,10 @@ app.get('/', async (req, res) => {
   res.send({})
 })
 
+app.get(['/health', '/ready', '/live'], (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
