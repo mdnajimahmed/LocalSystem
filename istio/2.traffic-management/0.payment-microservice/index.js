@@ -1,5 +1,20 @@
 const express = require('express');
 const app = express();
+
+
+// Middleware to capture request headers and add them to response headers
+app.use((req, res, next) => {
+  console.log("updating response headers")
+  // Loop through each request header
+  Object.keys(req.headers).forEach(headerName => {
+    // Add the request header to the response with prefix 'x-req-header-'
+    res.setHeader(`x-req-header-${headerName}`, req.headers[headerName]);
+  });
+  // Continue to the next middleware or route handler
+  next();
+});
+
+
 const port = 3000;
 
 const UNKNOWN = 'unknown'
