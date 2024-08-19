@@ -30,6 +30,16 @@ spec:
         version: v1
     spec:
       containers:
+      - name: curl
+        image: curlimages/curl:8.9.1
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
       - image: docker.io/kong/httpbin
         imagePullPolicy: IfNotPresent
         name: httpbin
