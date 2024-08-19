@@ -44,7 +44,7 @@ spec:
     to:
     - operation:
         methods: ["GET"]
-        paths: ["/api/version"]
+        paths: ["/api/pascal-triangle"]
     when:
     - key: request.auth.claims[payment-service.cloud/roles]
       values: ["Editor"]

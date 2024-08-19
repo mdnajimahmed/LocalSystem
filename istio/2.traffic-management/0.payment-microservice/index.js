@@ -103,6 +103,16 @@ app.get('/api/unstable', async (req, res) => {
 });
 
 
+app.get(['/api/pascal-triangle'], (req, res) => {
+  res.status(200).send(`version = ${appVersion}. 
+    1
+   1 1
+  1 2 1
+ 1 3 3 1
+1 4 6 4 1
+    `);
+});
+
 app.get(['/health', '/ready', '/live'], (req, res) => {
   res.status(200).send(`OK from version = ${appVersion}`);
 });
