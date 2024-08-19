@@ -15,3 +15,37 @@ spec:
         methods: ["GET"]
         paths: ["/api/version"]
   action: DENY
+--- 
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: payment-service-jwt
+spec:
+  selector:
+    matchLabels:
+      app: payment-microservice
+  jwtRules:
+  - issuer: "https://dev-dcaw1vncocip3kwe.us.auth0.com/"
+    jwksUri: "https://dev-dcaw1vncocip3kwe.us.auth0.com/.well-known/jwks.json"
+--- 
+
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-payment-editor
+spec:
+  selector:
+    matchLabels:
+      app: payment-microservice
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/api/version"]
+    when:
+    - key: request.auth.claims[payment-service.cloud/roles]
+      values: ["Editor"]
+  action: ALLOW
