@@ -2,6 +2,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: deny-istio-pa-to-payment-microservice
+  namespace: istio-demo
 spec:
   selector:
     matchLabels:
@@ -10,4 +11,8 @@ spec:
   - from:
     - source:
         namespaces: ["istio-pa"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/api/version"]
   action: DENY
