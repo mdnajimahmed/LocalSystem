@@ -1,32 +1,32 @@
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: allow-other-traffic
-  namespace: istio-demo
-spec:
-  selector:
-    matchLabels:
-      app: payment-microservice
-  action: ALLOW
---- 
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: deny-istio-pa-to-payment-microservice
-spec:
-  selector:
-    matchLabels:
-      app: payment-microservice
-  rules:
-  - from:
-    - source:
-        namespaces: ["istio-pa"]
-    to:
-    - operation:
-        methods: ["GET"]
-        paths: ["/api/version"]
-  action: DENY
---- 
+# apiVersion: security.istio.io/v1beta1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: allow-other-traffic
+#   namespace: istio-demo
+# spec:
+#   selector:
+#     matchLabels:
+#       app: payment-microservice
+#   action: ALLOW
+# --- 
+# apiVersion: security.istio.io/v1beta1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: deny-istio-pa-to-payment-microservice
+# spec:
+#   selector:
+#     matchLabels:
+#       app: payment-microservice
+#   rules:
+#   - from:
+#     - source:
+#         namespaces: ["istio-pa"]
+#     to:
+#     - operation:
+#         methods: ["GET"]
+#         paths: ["/api/version"]
+#   action: DENY
+# --- 
 apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication
 metadata:
