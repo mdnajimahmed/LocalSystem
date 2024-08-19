@@ -13,16 +13,6 @@ spec:
         app: shellz
     spec:
       containers:
-      - name: busybox
-        image: busybox
-        command: ["sh", "-c", "while true; do sleep 3600; done"]
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
-            cpu: "100m"
       - name: curl
         image: curlimages/curl:8.9.1
         command: ["sh", "-c", "while true; do sleep 3600; done"]
@@ -90,3 +80,32 @@ spec:
     targetPort: 9090
   selector:
     app: httpbin
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+--- 
