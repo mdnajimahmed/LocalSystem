@@ -1,17 +1,17 @@
-apiVersion: security.istio.io/v1
-kind: AuthorizationPolicy
-metadata:
-  name: ingress-policy
-  namespace: istio-system
-spec:
-  selector:
-    matchLabels:
-      app: istio-ingressgateway
-  action: ALLOW
-  rules:
-  - from:
-    - source:
-        remoteIpBlocks: ["0.0.0.0"]
-        ipBlocks: ["0.0.0.0"]
-        # remoteIpBlocks: ["161.142.148.26"]
-        # ipBlocks: ["161.142.148.26"]
+# apiVersion: security.istio.io/v1
+# kind: AuthorizationPolicy
+# metadata:
+#   name: ingress-policy
+#   namespace: istio-system
+# spec:
+#   selector:
+#     matchLabels:
+#       app: istio-ingressgateway
+#   action: ALLOW
+#   rules:
+#   - from:
+#     - source:
+#         remoteIpBlocks: ["0.0.0.0"]
+#         ipBlocks: ["0.0.0.0"]
+#         # remoteIpBlocks: ["161.142.148.26"]
+#         # ipBlocks: ["161.142.148.26"]
