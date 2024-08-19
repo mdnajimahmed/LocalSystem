@@ -48,60 +48,59 @@ spec:
           requests:
             memory: "256Mi"
             cpu: "100m"
-# --- 
+--- 
 
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: httpbin
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: httpbin
-#   template:
-#     metadata:
-#       labels:
-#         app: httpbin
-#     spec:
-#       containers:
-#       - name: httpbin
-#         image: docker.io/kong/httpbin
-#         imagePullPolicy: IfNotPresent
-#         # Same as found in Dockerfile's CMD but using an unprivileged port
-#         command:
-#         - gunicorn
-#         - -b
-#         - "[::]:9090"
-#         - httpbin:app
-#         - -k
-#         - gevent
-#         env:
-#         # Tells pipenv to use a writable directory instead of $HOME
-#         - name: WORKON_HOME
-#           value: /tmp
-#         ports:
-#         - containerPort: 9090
-#         resources:
-#           limits:
-#             memory: "256Mi"
-#             cpu: "100m"
-#           requests:
-#             memory: "256Mi"
-#             cpu: "100m"
-# --- 
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: httpbin
-#   labels:
-#     app: httpbin
-# spec:
-#   ports:
-#   - name: http
-#     port: 8000
-#     targetPort: 9090
-#   selector:
-#     app: httpbin
-# --- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin-mock-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin-mock-server
+  template:
+    metadata:
+      labels:
+        app: httpbin-mock-server
+    spec:
+      containers:
+      - name: httpbin-mock-server
+        image: docker.io/kong/httpbin
+        imagePullPolicy: IfNotPresent
+        # Same as found in Dockerfile's CMD but using an unprivileged port
+        command:
+        - gunicorn
+        - -b
+        - "[::]:9090"
+        - httpbin:app
+        - -k
+        - gevent
+        env:
+        # Tells pipenv to use a writable directory instead of $HOME
+        - name: WORKON_HOME
+          value: /tmp
+        ports:
+        - containerPort: 9090
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin-mock-server
+  labels:
+    app: httpbin-mock-server
+spec:
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 9090
+  selector:
+    app: httpbin-mock-server
+--- 
