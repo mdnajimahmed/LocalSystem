@@ -11,5 +11,7 @@ spec:
   rules:
   - from:
     - source:
-        remoteIpBlocks: ["161.142.148.26"]
-        ipBlocks: ["161.142.148.26"]
+        remoteIpBlocks: ["0.0.0.0"]
+        ipBlocks: ["0.0.0.0"]
+        # remoteIpBlocks: ["161.142.148.26"]
+        # ipBlocks: ["161.142.148.26"]
