@@ -12,3 +12,4 @@ spec:
   - from:
     - source:
         remoteIpBlocks: ["161.142.148.26"]
+        ipBlocks: ["161.142.148.26"]
