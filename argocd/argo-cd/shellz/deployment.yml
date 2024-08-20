@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: shellz
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: shellz
@@ -55,7 +55,7 @@ kind: Deployment
 metadata:
   name: httpbin-mock-server
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: httpbin-mock-server
