@@ -496,6 +496,13 @@ spec:
         - name: prometheus-server-configmap-reload
           image: "ghcr.io/prometheus-operator/prometheus-config-reloader:v0.72.0"
           imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "100m"
           args:
             - --watched-dir=/etc/config
             - --reload-url=http://127.0.0.1:9090/-/reload
@@ -507,6 +514,13 @@ spec:
         - name: prometheus-server
           image: "prom/prometheus:v2.51.1"
           imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
           args:
             - --storage.tsdb.retention.time=15d
             - --config.file=/etc/config/prometheus.yml

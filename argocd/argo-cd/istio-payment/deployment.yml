@@ -105,7 +105,7 @@ kind: Deployment
 metadata:
   name: mole
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: mole
