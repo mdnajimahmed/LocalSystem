@@ -452,11 +452,15 @@ spec:
         - name: kiali-cabundle
           mountPath: "/kiali-cabundle"
         resources:
-          limits:
-            memory: 1Gi
           requests:
-            cpu: 10m
+              cpu: 50m
+              memory: 64Mi
+          limits:
+            cpu: 50m
             memory: 64Mi
+
+
+            
       volumes:
       - name: kiali-configuration
         configMap:

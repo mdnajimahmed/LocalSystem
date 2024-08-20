@@ -275,10 +275,10 @@ spec:
               mountPath: /var/loki
           resources:
             requests:
-              memory: "256Mi"
+              memory: "512Mi"
               cpu: "500m"
             limits:
-              memory: "256Mi"
+              memory: "512Mi"
               cpu: "500m"
       affinity:
         podAntiAffinity:
