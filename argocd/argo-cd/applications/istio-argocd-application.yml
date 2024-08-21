@@ -20,6 +20,17 @@ spec:
           global:
             disablePolicyChecks: false
 
+          extensionProviders:
+            - name: "localtrace"
+              zipkin:
+                service: "zipkin.istio-system.svc.cluster.local"
+                port: 9411
+                maxTagLength: 256
+            - name: "prometheus"
+              prometheus:
+                # No additional configuration needed for Prometheus, it's just for metrics
+                maxTagLength: 256
+
   destination:
     server: 'https://34.126.151.196'
     namespace: istio-system
